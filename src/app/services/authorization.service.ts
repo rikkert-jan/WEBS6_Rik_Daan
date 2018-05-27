@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs/Observable";
-import { firebase } from '@firebase/app';
-import { User } from "@firebase/auth-types";
+import { User } from "firebase";
+import { auth } from 'firebase/app';
 
 @Injectable() export class AuthorizationService {
 
@@ -13,7 +13,7 @@ import { User } from "@firebase/auth-types";
     }
 
     public login() {
-        this.authService.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        this.authService.auth.signInWithPopup(new auth.GoogleAuthProvider());
     }
 
     public logout() {

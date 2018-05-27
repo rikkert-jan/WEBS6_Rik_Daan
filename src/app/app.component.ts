@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from '@firebase/util/dist/src/subscribe';
-
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -11,12 +10,17 @@ import { Observable } from '@firebase/util/dist/src/subscribe';
 export class AppComponent {
     title = 'app';
 
-    public items: Observable<any[]>;
+    public itemObservable: Observable<any[]>;
+    public items: any[];
 
     constructor(
         private database: AngularFireDatabase
     ) {
-        this.items = this.database.list('/items').snapshotChanges();
-        this.items = this.database.list('/items').valueChanges();
+        this.itemObservable = this.database.list('/items').valueChanges();
+        this.itemObservable.subscribe(x => {
+            this.items = x;
+        });
+
+        // this.database.list('/items').set('/item', 'hello world');
     }
 }
