@@ -4,8 +4,8 @@ import { Round } from "./Round";
 
 export class Competition {
     id: number;
-    participants: User[];
-    rounds: Round[];
+    participants?: User[];
+    rounds?: Round[];
     type: string;
     name: string;
     date: Date;
