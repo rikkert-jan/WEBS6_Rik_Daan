@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// components
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/log-in/log-in.component';
 
 // services
 import { AuthorizationService } from '../app/services/authorization.service';
@@ -15,7 +17,8 @@ import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -23,7 +26,10 @@ import { environment } from '../environments/environment';
         AngularFireAuthModule,
         AngularFireDatabaseModule
     ],
-    providers: [],
+    providers: [
+        AuthorizationService,
+        MatchService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

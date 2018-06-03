@@ -3,17 +3,26 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs/Observable";
 import { User } from "firebase";
 import { auth } from 'firebase/app';
+import { AngularFireDatabase } from "angularfire2/database";
 
 @Injectable() export class AuthorizationService {
 
     public user: User;
 
-    constructor(public authService: AngularFireAuth) {
+    constructor(
+        private authService: AngularFireAuth,
+        private database: AngularFireDatabase
+    ) {
         this.authService.authState.subscribe(u => this.user = u);
     }
 
     public login() {
-        this.authService.auth.signInWithPopup(new auth.GoogleAuthProvider());
+        this.authService.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(result => {
+            console.log('test');
+            // if (this.user) {
+            //     this.database.list('/users').set('/user', this.user.email);
+            // }
+        });
     }
 
     public logout() {
@@ -27,5 +36,4 @@ import { auth } from 'firebase/app';
             return undefined;
         }
     }
-
 }
