@@ -1,9 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// models
+import {Match} from "../app/models/match";
+
 // components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/log-in/log-in.component';
+import { MatchListComponent } from './components/match-list/match-list.component';
+import { MatchDetailComponent } from './components/match-detail/match-detail.component';
 
 // services
 import { AuthorizationService } from '../app/services/authorization.service';
@@ -18,7 +23,9 @@ import { environment } from '../environments/environment';
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent
+        LoginComponent,
+        MatchListComponent,
+        MatchDetailComponent
     ],
     imports: [
         BrowserModule,
