@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs';
 import { MatchService } from "../../services/match.service";
 import { Match } from "../../models/match";
 
@@ -18,5 +16,4 @@ export class MatchDetailComponent {
     deleteMatch() {
         this.matchService.deleteMatch(this.match.id.toString());
     }
-
 }

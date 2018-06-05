@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { MatchService } from "../../services/match.service";
 import { Match } from "../../models/match";
-import { OnInit } from "@angular/core";
 
 @Component({
     selector: 'match-list',
@@ -13,14 +10,23 @@ import { OnInit } from "@angular/core";
 })
 export class MatchListComponent implements OnInit {
 
-    public matchObservable: Observable<Match[]>;
     public matches: Match[];
 
     constructor(private matchService: MatchService) { }
 
     ngOnInit() {
-        this.matchService.matchObservable.subscribe((someList) => {
-            this.matches = someList;
+        this.matchService.matches.snapshotChanges().subscribe((matches) => {
+            this.matches = matches.map(
+                m => new Match(
+                    m.key,
+                    m.payload.val().status,
+                    m.payload.val().creator,
+                    m.payload.val().participants,
+                    m.payload.val().startingTime,
+                    m.payload.val().winner
+                )
+            ) as Match[];
+            console.log(this.matches);
         });
     }
 }

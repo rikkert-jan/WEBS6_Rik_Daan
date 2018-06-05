@@ -1,1 +1,6 @@
-<p>{{match.id}} <button (click)='deleteItem()'>Delete</button></p>
+<p>
+    <span>{{match.id}} - </span>
+    <span>{{match.startingTime}} - </span>    
+    <span>{{match.status}}</span>    
+    <button (click)='deleteMatch()'>Delete</button>
+</p>

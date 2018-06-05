@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
+import { AngularFireDatabase } from "angularfire2/database";
 import { Round } from "../models/Round";
 import { Observable } from "rxjs/Observable";
 

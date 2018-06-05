@@ -7,31 +7,38 @@ import { Observable } from "rxjs/Observable";
 @Injectable()
 export class MatchService {
 
-    public matchObservable: Observable<any[]>;
-    public matches: Match[];
+    public matches: AngularFireList<Match>;
+    public match: AngularFireObject<Match>;
 
     private matchTableName = '/matches';
 
     constructor(private database: AngularFireDatabase) {
-        this.readMatches();
+        this.getMatches();
     }
 
-    public readMatches() {
-        this.matchObservable = this.database.list(this.matchTableName).valueChanges();
-        this.matchObservable.subscribe(matches => {
-            this.matches = matches as Match[];
-        });
+    public getMatches(): AngularFireList<Match> {
+        this.matches = this.database.list(this.matchTableName)
+        return this.matches;
+    }
+
+    public getMatch(key: string): AngularFireObject<Match> {
+        this.match = this.database.object(this.matchTableName + "/" + key);
+        return this.match
     }
 
     public deleteMatch(key: string) {
-        this.database.list(this.matchTableName).remove(key);
+        this.matches.remove(key);
     }
 
     public createMatch(match: Match) {
-        this.database.list(this.matchTableName).push(match);
+        var newMatch = match;
+        newMatch.id = null;
+        this.matches.push(newMatch);
     }
 
-    public updateMatch(key: string, match: Match) {
-        this.database.list(this.matchTableName).update(key, match);
+    public updateMatch(match: Match) {
+        var updatedMatch = match;
+        updatedMatch.id = null;
+        this.matches.update(match.id, updatedMatch);
     }
 }
