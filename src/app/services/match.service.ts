@@ -12,20 +12,26 @@ export class MatchService {
 
     private matchTableName = '/matches';
 
-    constructor(
-        private database: AngularFireDatabase
-    ) {
+    constructor(private database: AngularFireDatabase) {
         this.readMatches();
     }
 
     public readMatches() {
         this.matchObservable = this.database.list(this.matchTableName).valueChanges();
         this.matchObservable.subscribe(matches => {
-            this.matches = matches;
+            this.matches = matches as Match[];
         });
     }
 
-    public deleteMatch(id: string){
-        this.database.list(this.matchTableName).remove(id);
+    public deleteMatch(key: string) {
+        this.database.list(this.matchTableName).remove(key);
+    }
+
+    public createMatch(match: Match) {
+        this.database.list(this.matchTableName).push(match);
+    }
+
+    public updateMatch(key: string, match: Match) {
+        this.database.list(this.matchTableName).update(key, match);
     }
 }
