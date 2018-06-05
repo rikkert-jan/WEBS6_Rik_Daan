@@ -9,13 +9,12 @@ import { Match } from "../app/models/match";
 // components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/log-in/log-in.component';
-import { MatchListComponent } from './components/match-list/match-list.component';
-import { MatchDetailComponent } from './components/match-detail/match-detail.component';
-import { MatchFormComponent } from './components/match-form/match-form.component';
 
 // services
 import { AuthorizationService } from '../app/services/authorization.service';
-import { MatchService } from '../app/services/match.service';
+
+// modules
+import {MatchModule} from '../app/modules/match.module';
 
 // firebase
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -25,21 +24,17 @@ import { environment } from '../environments/environment';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'start', pathMatch: 'full' },
-    { path: 'start', component: MatchListComponent },
-    { path: 'matches', component: MatchListComponent },
-    { path: 'matches/:id/edit', component: MatchFormComponent }    
+    { path: 'start', component: AppComponent },  
 ];
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent,
-        MatchListComponent,
-        MatchDetailComponent,
-        MatchFormComponent
+        LoginComponent
     ],
     imports: [
+        MatchModule,
         BrowserModule,
         FormsModule,
         RouterModule.forRoot(routes),
@@ -49,7 +44,6 @@ export const routes: Routes = [
     ],
     providers: [
         AuthorizationService,
-        MatchService
     ],
     bootstrap: [AppComponent]
 })
