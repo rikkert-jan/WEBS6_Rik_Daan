@@ -8,16 +8,15 @@ import { Match } from "../models/match";
 
 // components
 import { MatchListComponent } from '../components/match-list/match-list.component';
-import { MatchDetailComponent } from '../components/match-detail/match-detail.component';
+import { MatchListDetailComponent } from '../components/match-list-detail/match-list-detail.component';
 import { MatchFormComponent } from '../components/match-form/match-form.component';
 
 // services
 import { MatchService } from '../services/match.service';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'start', pathMatch: 'full' },
-    { path: 'start', component: MatchListComponent },
     { path: 'matches', component: MatchListComponent },
+    { path: 'matches/add', component: MatchFormComponent },
     { path: 'matches/:id/edit', component: MatchFormComponent }
 ];
 
@@ -25,7 +24,7 @@ export const routes: Routes = [
 @NgModule({
     declarations: [
         MatchListComponent,
-        MatchDetailComponent,
+        MatchListDetailComponent,
         MatchFormComponent
     ],
     imports: [

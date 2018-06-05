@@ -1,23 +1,58 @@
-import { Component, Input } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
 import { CompetitionService } from "../../services/competition.service";
 import { Competition } from "../../models/competition";
-import { OnInit } from "@angular/core";
 
 @Component({
-    selector: 'competition-list',
-    templateUrl: './competition-list.component.html',
-    styleUrls: ['./competition-list.component.scss'],
-    providers: [CompetitionService]
+    selector: 'competition-form',
+    templateUrl: './competition-form.component.html',
+    styleUrls: ['./competition-form.component.scss'],
 })
 export class CompetitionFormComponent implements OnInit {
 
-    @Input() competition: Competition[];
+    @Input() competition: Competition = new Competition();
+    private competitionId: string;
 
-    constructor(private competitionService: CompetitionService) { }
+    constructor(
+        private competitionService: CompetitionService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) { }
+
+    onSubmit(form: any): void {
+        this.competition.rounds = [];
+        this.competition.creator = null;
+        this.competition.winner = null;
+        this.competition.participants = [];
+
+        if (this.competitionId) {
+            this.competitionService.updateCompetition(this.competitionId, this.competition);
+        } else {
+            this.competitionService.createCompetition(this.competition);
+        }
+    }
 
     ngOnInit() {
-
+        this.competitionId = this.route.snapshot.paramMap.get('id');
+        if (this.competitionId) {
+            this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
+                if (competition.key) {
+                    this.competition = new Competition(
+                        competition.key,
+                        competition.payload.val().participants,
+                        competition.payload.val().rounds,
+                        competition.payload.val().type,
+                        competition.payload.val().name,
+                        competition.payload.val().date,
+                        competition.payload.val().maxAmountOfParticipants,
+                        competition.payload.val().minutesPerMatch,
+                        competition.payload.val().creator,
+                        competition.payload.val().winner
+                    );
+                } else {
+                    this.competition = new Competition();
+                }
+            });
+        }
     }
 }

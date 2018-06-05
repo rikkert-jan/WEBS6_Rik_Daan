@@ -23,21 +23,32 @@ export class MatchFormComponent implements OnInit {
         this.match.creator = null;
         this.match.participants = [];
         this.match.winner = null;
-        this.matchService.updateMatch(this.matchId, this.match);
+
+        if (this.matchId) {
+            this.matchService.updateMatch(this.matchId, this.match);
+        } else {
+            this.matchService.createMatch(this.match);
+        }
     }
 
     ngOnInit() {
         this.matchId = this.route.snapshot.paramMap.get('id');
-        this.matchService.getMatch(this.matchId).snapshotChanges().subscribe(match => {
-            this.match = new Match(
-                match.key,
-                match.payload.val().status,
-                match.payload.val().creator,
-                match.payload.val().participants,
-                match.payload.val().startingTime,
-                match.payload.val().winner
-            );
-        });
+        if (this.matchId) {
+            this.matchService.getMatch(this.matchId).snapshotChanges().subscribe(match => {
+                if (match.key) {
+                    this.match = new Match(
+                        match.key,
+                        match.payload.val().status,
+                        match.payload.val().creator,
+                        match.payload.val().participants,
+                        match.payload.val().startingTime,
+                        match.payload.val().winner
+                    );
+                } else {
+                    this.match = new Match();
+                }
+            });
+        }
     }
 
 }

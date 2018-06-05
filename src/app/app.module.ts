@@ -14,7 +14,8 @@ import { LoginComponent } from './components/log-in/log-in.component';
 import { AuthorizationService } from '../app/services/authorization.service';
 
 // modules
-import {MatchModule} from '../app/modules/match.module';
+import { MatchModule } from '../app/modules/match.module';
+import { CompetitionModule } from '../app/modules/competition.module';
 
 // firebase
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -23,8 +24,7 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'start', pathMatch: 'full' },
-    { path: 'start', component: AppComponent },  
+    { path: '', component: AppComponent },
 ];
 
 
@@ -35,6 +35,7 @@ export const routes: Routes = [
     ],
     imports: [
         MatchModule,
+        CompetitionModule,
         BrowserModule,
         FormsModule,
         RouterModule.forRoot(routes),

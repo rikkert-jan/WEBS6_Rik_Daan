@@ -1,0 +1,36 @@
+<div class="ui raised segment">
+    <h2 class="ui header">Add Competition</h2>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+
+        <div class="field">
+            <label for="nameInput">Name</label>
+            <input type="text" id="nameInput" name="name" [(ngModel)]="competition.name">
+        </div>
+
+        <div class="field">
+            <label for="dateInput">Date</label>
+            <input type="datetime-local" id="dateInput" name="date" [(ngModel)]="competition.date">
+        </div>
+
+        <div class="field">
+            <label for="maxAmountOfParticipantsInput">Maximum amount of participants</label>
+            <input type="number" id="maxAmountOfParticipantsInput" name="maxAmountOfParticipants" [(ngModel)]="competition.maxAmountOfParticipants">
+        </div>
+
+        <div class="field">
+            <label for="minutesPerMatchInput">Match duration in minutes</label>
+            <input type="number" id="minutesPerMatchInput" name="minutesPerMatch" [(ngModel)]="competition.minutesPerMatch">
+        </div>
+
+        <div class="field">
+            <label for="typeInput">Type</label>
+            <select name="type" id="typeInput" [(ngModel)]="competition.type">
+                    <option value="TOURNAMENT">Tournament</option>                    
+                    <option value="POULE">Poule</option>
+                    <option value="KNOCKOUT">Knock-out</option>                    
+                </select>
+        </div>
+
+        <button type="submit" class="ui button">Submit</button>
+    </form>
+</div>

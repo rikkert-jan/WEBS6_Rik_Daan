@@ -1,41 +1,44 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
 import { Competition } from "../models/Competition";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 
-@Injectable() export class CompetitionService {
 
-    public competitionObservable: Observable<any[]>;
-    public competitions: Competition[];
+@Injectable()
+export class CompetitionService {
+
+    public competitions: AngularFireList<Competition>;
+    public competition: AngularFireObject<Competition>;
 
     private competitionTableName = '/competitions';
 
-    constructor(
-        private database: AngularFireDatabase
-    ) {
-        this.getAll();
+    constructor(private database: AngularFireDatabase) {
+        this.getCompetitions();
     }
 
-    public getAll() {
-        this.competitionObservable = this.database.list(this.competitionTableName).valueChanges();
-        this.competitionObservable.subscribe(competitions => {
-            this.competitions = competitions as Competition[];
-        });
+    public getCompetitions(): AngularFireList<Competition> {
+        this.competitions = this.database.list(this.competitionTableName)
+        return this.competitions;
     }
 
-    public addCompetition() {
-        const comp: Competition = {
-            id: 1,
-            name: 'test',
-            maxAmountOfParticipants: 1,
-            timePerMatch: 1,
-            type: 'type test',
-            date: new Date()
-        };
-        this.database.list(this.competitionTableName).set('1', comp);
+    public getCompetition(key: string): AngularFireObject<Competition> {
+        this.competition = this.database.object(this.competitionTableName + "/" + key);
+        return this.competition;
     }
 
-    public deleteCompetition() {
+    public deleteCompetition(key: string) {
+        this.competitions.remove(key);
+    }
 
+    public createCompetition(competition: Competition) {
+        var newCompetition = competition;
+        newCompetition.id = null;
+        this.competitions.push(newCompetition);
+    }
+
+    public updateCompetition(id: string, competition: Competition) {
+        var updatedCompetition = competition;
+        updatedCompetition.id = null;
+        this.competitions.update(id, updatedCompetition);
     }
 }

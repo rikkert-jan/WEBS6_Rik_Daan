@@ -1,5 +1,6 @@
 <ul>
     <li class="text" *ngFor="let match of matches">
-        <match-detail [match]='match'></match-detail>
+        <match-list-detail [match]='match'></match-list-detail>
     </li>
 </ul>
+<a routerLink="/matches/add" routerLinkActive="active">Add Match</a>        

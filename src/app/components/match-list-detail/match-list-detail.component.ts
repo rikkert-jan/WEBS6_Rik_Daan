@@ -3,11 +3,11 @@ import { MatchService } from "../../services/match.service";
 import { Match } from "../../models/match";
 
 @Component({
-    selector: 'match-detail',
-    templateUrl: './match-detail.component.html',
-    styleUrls: ['./match-detail.component.scss'],
+    selector: 'match-list-detail',
+    templateUrl: './match-list-detail.component.html',
+    styleUrls: ['./match-list-detail.component.scss'],
 })
-export class MatchDetailComponent {
+export class MatchListDetailComponent {
 
     @Input() match: Match;
 

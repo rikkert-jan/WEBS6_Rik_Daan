@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { CompetitionService } from "../../services/competition.service";
 import { Competition } from "../../models/competition";
-import { OnInit } from "@angular/core";
 
 @Component({
     selector: 'competition-list',
@@ -18,8 +15,21 @@ export class CompetitionListComponent implements OnInit {
     constructor(private competitionService: CompetitionService) { }
 
     ngOnInit() {
-        this.competitionService.competitionObservable.subscribe((competitions) => {
-            this.competitions = competitions as Competition[];
-        });
-    }
+        this.competitionService.competitions.snapshotChanges().subscribe((competitions) => {
+            this.competitions = competitions.map(
+                competition => new Competition(
+                    competition.key,
+                    competition.payload.val().participants,
+                    competition.payload.val().rounds,
+                    competition.payload.val().type,
+                    competition.payload.val().name,
+                    competition.payload.val().date,
+                    competition.payload.val().maxAmountOfParticipants,
+                    competition.payload.val().minutesPerMatch,
+                    competition.payload.val().creator,
+                    competition.payload.val().winner
+                )
+            ) as Competition[];
+    });
+}
 }
