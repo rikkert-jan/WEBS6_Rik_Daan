@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 // models
 import { Match } from "../app/models/match";
@@ -25,7 +25,9 @@ import { environment } from '../environments/environment';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'start', pathMatch: 'full' },
-    { path: 'start', component: AppComponent },
+    { path: 'start', component: MatchListComponent },
+    { path: 'matches', component: MatchListComponent },
+    { path: 'matches/:id/edit', component: MatchFormComponent }    
 ];
 
 
@@ -40,6 +42,7 @@ export const routes: Routes = [
     imports: [
         BrowserModule,
         FormsModule,
+        RouterModule.forRoot(routes),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         AngularFireDatabaseModule

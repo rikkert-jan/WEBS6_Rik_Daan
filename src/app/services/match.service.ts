@@ -36,9 +36,9 @@ export class MatchService {
         this.matches.push(newMatch);
     }
 
-    public updateMatch(match: Match) {
+    public updateMatch(id: string, match: Match) {
         var updatedMatch = match;
         updatedMatch.id = null;
-        this.matches.update(match.id, updatedMatch);
+        this.matches.update(id, updatedMatch);
     }
 }

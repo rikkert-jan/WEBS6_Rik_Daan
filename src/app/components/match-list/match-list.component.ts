@@ -26,7 +26,6 @@ export class MatchListComponent implements OnInit {
                     m.payload.val().winner
                 )
             ) as Match[];
-            console.log(this.matches);
         });
     }
 }

@@ -3,4 +3,5 @@
     <span>{{match.startingTime}} - </span>    
     <span>{{match.status}}</span>    
     <button (click)='deleteMatch()'>Delete</button>
+    <a routerLink="/matches/{{match.id}}/edit" routerLinkActive="active">Edit</a>    
 </p>

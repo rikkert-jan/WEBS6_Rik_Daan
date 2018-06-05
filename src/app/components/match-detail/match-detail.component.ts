@@ -13,7 +13,8 @@ export class MatchDetailComponent {
 
     constructor(private matchService: MatchService) { }
 
-    deleteMatch() {
+    public deleteMatch() {
         this.matchService.deleteMatch(this.match.id.toString());
     }
+
 }
