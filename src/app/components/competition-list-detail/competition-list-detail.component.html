@@ -1,7 +1,8 @@
 <p>
-    <span>{{competition.id}} - </span>
-    <span>{{competition.name}} - </span>    
+    <span>{{competition.name}} - </span>
+    <span>{{competition.type}} - </span>    
     <span>{{competition.date}}</span>    
     <button (click)='deleteCompetition()'>Delete</button>
-    <a routerLink="/competitions/{{competition.id}}/edit" routerLinkActive="active">Edit</a>    
+    <a routerLink="/competitions/{{competition.id}}/edit" routerLinkActive="active">Edit</a>
+    <a routerLink="/competitions/{{competition.id}}" routerLinkActive="active">Details</a>        
 </p>

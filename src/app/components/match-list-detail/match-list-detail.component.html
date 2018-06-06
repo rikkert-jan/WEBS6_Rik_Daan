@@ -1,7 +1,7 @@
 <p>
-    <span>{{match.id}} - </span>
     <span>{{match.startingTime}} - </span>    
     <span>{{match.status}}</span>    
     <button (click)='deleteMatch()'>Delete</button>
-    <a routerLink="/matches/{{match.id}}/edit" routerLinkActive="active">Edit</a>    
+    <a routerLink="/matches/{{match.id}}/edit" routerLinkActive="active">Edit</a>
+    <a routerLink="/matches/{{match.id}}" routerLinkActive="active">Detail</a>        
 </p>

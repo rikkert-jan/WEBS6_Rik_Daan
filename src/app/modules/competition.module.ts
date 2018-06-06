@@ -10,6 +10,7 @@ import { Competition } from "../models/competition";
 import { CompetitionListComponent } from '../components/competition-list/competition-list.component';
 import { CompetitionListDetailComponent } from '../components/competition-list-detail/competition-list-detail.component';
 import { CompetitionFormComponent } from '../components/competition-form/competition-form.component';
+import { CompetitionDetailComponent } from '../components/competition-detail/competition-detail.component';
 
 // services
 import { CompetitionService } from '../services/competition.service';
@@ -17,6 +18,7 @@ import { CompetitionService } from '../services/competition.service';
 export const routes: Routes = [
     { path: 'competitions', component: CompetitionListComponent },
     { path: 'competitions/add', component: CompetitionFormComponent },
+    { path: 'competitions/:id', component: CompetitionDetailComponent },   
     { path: 'competitions/:id/edit', component: CompetitionFormComponent }
 ];
 
@@ -25,7 +27,8 @@ export const routes: Routes = [
     declarations: [
         CompetitionListComponent,
         CompetitionListDetailComponent,
-        CompetitionFormComponent
+        CompetitionFormComponent,
+        CompetitionDetailComponent
     ],
     imports: [
         BrowserModule,

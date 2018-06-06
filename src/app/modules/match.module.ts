@@ -10,6 +10,7 @@ import { Match } from "../models/match";
 import { MatchListComponent } from '../components/match-list/match-list.component';
 import { MatchListDetailComponent } from '../components/match-list-detail/match-list-detail.component';
 import { MatchFormComponent } from '../components/match-form/match-form.component';
+import { MatchDetailComponent } from '../components/match-detail/match-detail.component';
 
 // services
 import { MatchService } from '../services/match.service';
@@ -17,6 +18,7 @@ import { MatchService } from '../services/match.service';
 export const routes: Routes = [
     { path: 'matches', component: MatchListComponent },
     { path: 'matches/add', component: MatchFormComponent },
+    { path: 'matches/:id', component: MatchDetailComponent },
     { path: 'matches/:id/edit', component: MatchFormComponent }
 ];
 
@@ -25,7 +27,8 @@ export const routes: Routes = [
     declarations: [
         MatchListComponent,
         MatchListDetailComponent,
-        MatchFormComponent
+        MatchFormComponent,
+        MatchDetailComponent
     ],
     imports: [
         BrowserModule,
