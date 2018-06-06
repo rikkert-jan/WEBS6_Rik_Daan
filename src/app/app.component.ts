@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -10,17 +8,7 @@ import { Observable } from 'rxjs';
 export class AppComponent {
     title = 'app';
 
-    public itemObservable: Observable<any[]>;
-    public items: any[];
+    constructor( ) {
 
-    constructor(
-        private database: AngularFireDatabase
-    ) {
-        this.itemObservable = this.database.list('/items').valueChanges();
-        this.itemObservable.subscribe(x => {
-            this.items = x;
-        });
-
-        // this.database.list('/items').set('/item', 'hello world');
     }
 }
