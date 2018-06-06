@@ -17,19 +17,8 @@ export class CompetitionListComponent implements OnInit {
     ngOnInit() {
         this.competitionService.competitions.snapshotChanges().subscribe((competitions) => {
             this.competitions = competitions.map(
-                competition => new Competition(
-                    competition.key,
-                    competition.payload.val().participants,
-                    competition.payload.val().rounds,
-                    competition.payload.val().type,
-                    competition.payload.val().name,
-                    competition.payload.val().date,
-                    competition.payload.val().maxAmountOfParticipants,
-                    competition.payload.val().minutesPerMatch,
-                    competition.payload.val().creator,
-                    competition.payload.val().winner
-                )
-            ) as Competition[];
-    });
-}
+                competition => ({ id: competition.key, ...competition.payload.val() })
+            );
+        });
+    }
 }

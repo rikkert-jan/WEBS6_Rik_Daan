@@ -1,0 +1,6 @@
+<div class="field">
+    <label for="participantsInput">Type</label>
+    <select name="type" id="participantsInput" [(ngModel)]="competition.participants" multiple>
+                <option *ngFor="let user of users" [ngValue]="{'id': user.id}">{{user.name}}</option>
+            </select>
+</div>

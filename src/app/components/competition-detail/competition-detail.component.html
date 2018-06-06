@@ -4,5 +4,7 @@
     <p><b>Type: </b>{{competition.type}}</p>    
     <p><b>Date: </b>{{competition.date}}</p>
     <p><b>Max. Participants: </b>{{competition.maxAmountOfParticipants}}</p>
-    <p><b>Match duration: </b>{{competition.minutesPerMatch}}</p>    
+    <p><b>Match duration: </b>{{competition.minutesPerMatch}}</p> 
+    
+    <competition-users [competition]='competition'></competition-users>
 </div>

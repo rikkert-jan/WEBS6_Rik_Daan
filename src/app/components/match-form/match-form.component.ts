@@ -36,14 +36,7 @@ export class MatchFormComponent implements OnInit {
         if (this.matchId) {
             this.matchService.getMatch(this.matchId).snapshotChanges().subscribe(match => {
                 if (match.key) {
-                    this.match = new Match(
-                        match.key,
-                        match.payload.val().status,
-                        match.payload.val().creator,
-                        match.payload.val().participants,
-                        match.payload.val().startingTime,
-                        match.payload.val().winner
-                    );
+                    this.match = { id: match.key, ...match.payload.val() }
                 } else {
                     this.match = new Match();
                 }

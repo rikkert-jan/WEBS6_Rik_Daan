@@ -23,6 +23,7 @@ import { AngularFireDatabase } from "angularfire2/database";
         this.authService.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(result => {
             const currentUser = this.authService.auth.currentUser;
             let user = {
+                id: currentUser.uid,
                 email: currentUser.email,
                 name: currentUser.displayName
             };
@@ -39,6 +40,7 @@ import { AngularFireDatabase } from "angularfire2/database";
         const currentUser = this.authService.auth.currentUser;
 
         let user = {
+            id: currentUser.uid,
             email: currentUser.email,
             name: currentUser.displayName,
             gamesWon: newGamesWon

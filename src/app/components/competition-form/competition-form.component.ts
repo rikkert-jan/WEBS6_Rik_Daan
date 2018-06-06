@@ -1,7 +1,9 @@
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { CompetitionService } from "../../services/competition.service";
+import { UserService } from "../../services/user.service";
 import { Competition } from "../../models/competition";
+import { User } from "../../models/user";
 
 @Component({
     selector: 'competition-form',
@@ -15,6 +17,7 @@ export class CompetitionFormComponent implements OnInit {
 
     constructor(
         private competitionService: CompetitionService,
+        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router
     ) { }
@@ -23,7 +26,6 @@ export class CompetitionFormComponent implements OnInit {
         this.competition.rounds = [];
         this.competition.creator = null;
         this.competition.winner = null;
-        this.competition.participants = [];
 
         if (this.competitionId) {
             this.competitionService.updateCompetition(this.competitionId, this.competition);
@@ -37,22 +39,12 @@ export class CompetitionFormComponent implements OnInit {
         if (this.competitionId) {
             this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
                 if (competition.key) {
-                    this.competition = new Competition(
-                        competition.key,
-                        competition.payload.val().participants,
-                        competition.payload.val().rounds,
-                        competition.payload.val().type,
-                        competition.payload.val().name,
-                        competition.payload.val().date,
-                        competition.payload.val().maxAmountOfParticipants,
-                        competition.payload.val().minutesPerMatch,
-                        competition.payload.val().creator,
-                        competition.payload.val().winner
-                    );
+                    this.competition = { id: competition.key, ...competition.payload.val() }
                 } else {
                     this.competition = new Competition();
                 }
             });
         }
+
     }
 }

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 // models
+import { User } from "../models/user";
 import { Competition } from "../models/competition";
 
 // components
@@ -11,9 +12,12 @@ import { CompetitionListComponent } from '../components/competition-list/competi
 import { CompetitionListDetailComponent } from '../components/competition-list-detail/competition-list-detail.component';
 import { CompetitionFormComponent } from '../components/competition-form/competition-form.component';
 import { CompetitionDetailComponent } from '../components/competition-detail/competition-detail.component';
+import { CompetitionUsersInputComponent } from '../components/competition-users-input/competition-users-input.component';
+import { CompetitionUsersComponent } from '../components/competition-users/competition-users.component';
 
 // services
 import { CompetitionService } from '../services/competition.service';
+import { UserService } from '../services/user.service';
 
 export const routes: Routes = [
     { path: 'competitions', component: CompetitionListComponent },
@@ -28,7 +32,9 @@ export const routes: Routes = [
         CompetitionListComponent,
         CompetitionListDetailComponent,
         CompetitionFormComponent,
-        CompetitionDetailComponent
+        CompetitionDetailComponent,
+        CompetitionUsersInputComponent,
+        CompetitionUsersComponent
     ],
     imports: [
         BrowserModule,
@@ -36,7 +42,8 @@ export const routes: Routes = [
         RouterModule.forRoot(routes)
     ],
     providers: [
-        CompetitionService
+        CompetitionService,
+        UserService
     ],
     bootstrap: [CompetitionListComponent]
 })
