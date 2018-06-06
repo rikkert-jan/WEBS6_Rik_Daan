@@ -25,23 +25,11 @@ export class CompetitionDetailComponent {
         if (this.competitionId) {
             this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
                 if (competition.key) {
-                    this.competition = new Competition(
-                        competition.key,
-                        competition.payload.val().participants,
-                        competition.payload.val().rounds,
-                        competition.payload.val().type,
-                        competition.payload.val().name,
-                        competition.payload.val().date,
-                        competition.payload.val().maxAmountOfParticipants,
-                        competition.payload.val().minutesPerMatch,
-                        competition.payload.val().creator,
-                        competition.payload.val().winner
-                    );
+                    this.competition = {id: competition.key, ...competition.payload.val()}                    
                 } else {
                     this.competition = new Competition();
                 }
             });
         }
     }
-
 }

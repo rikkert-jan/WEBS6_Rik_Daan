@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
 import { User } from "../models/User";
 import { Competition } from "../models/competition";
 import { Match } from "../models/match";
@@ -7,12 +7,15 @@ import { Match } from "../models/match";
 @Injectable() export class UserService {
 
     public users: AngularFireList<User>;
+    public user: AngularFireObject<User>;
 
     private userTableName = '/users';
 
     constructor(
         private database: AngularFireDatabase
-    ) { }
+    ) {
+        this.getAll();
+    }
 
     public getAll(): AngularFireList<User> {
         this.users = this.database.list(this.userTableName);
@@ -41,5 +44,10 @@ import { Match } from "../models/match";
         });
 
         return filteredList;
+    }
+
+    public getUser(id: string): AngularFireObject<User> {
+        this.user = this.database.object(this.userTableName + "/" + id);
+        return this.user;
     }
 }
