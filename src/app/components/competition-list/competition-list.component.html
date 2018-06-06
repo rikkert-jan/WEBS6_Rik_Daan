@@ -1,0 +1,6 @@
+<ul>
+    <li class="text" *ngFor="let competition of competitions">
+        <competition-list-detail [competition]='competition'></competition-list-detail>
+    </li>
+</ul>
+<a routerLink="/competitions/add" routerLinkActive="active">Add Competition</a>        
