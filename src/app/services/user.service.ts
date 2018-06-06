@@ -1,34 +1,29 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase } from "angularfire2/database";
-import { User } from "../models/User";
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
+import { User } from "../models/user";
 import { Observable } from "rxjs";
 
 @Injectable() export class UserService {
 
-   
-    public userObservable: Observable<any[]>;
-    public users: User[];
+
+    public users: AngularFireList<User>;
+    public user: AngularFireObject<User>;
 
     private userTableName = '/users';
 
     constructor(
         private database: AngularFireDatabase
     ) {
-
+        this.getUsers();
     }
 
-    public getAll() {
-        this.userObservable = this.database.list(this.userTableName).valueChanges();
-        this.userObservable.subscribe(users => {
-            this.users = users as User[];
-        });
+    public getUsers(): AngularFireList<User> {
+        this.users = this.database.list(this.userTableName);
+        return this.users;
     }
 
-    public addUser() {
-
-    }
-
-    public deleteUser() {
-
+    public getUser(id: string): AngularFireObject<User> {
+        this.user = this.database.object(this.userTableName + "/" + id);
+        return this.user;
     }
 }

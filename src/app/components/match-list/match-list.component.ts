@@ -17,15 +17,8 @@ export class MatchListComponent implements OnInit {
     ngOnInit() {
         this.matchService.matches.snapshotChanges().subscribe((matches) => {
             this.matches = matches.map(
-                m => new Match(
-                    m.key,
-                    m.payload.val().status,
-                    m.payload.val().creator,
-                    m.payload.val().participants,
-                    m.payload.val().startingTime,
-                    m.payload.val().winner
-                )
-            ) as Match[];
+                m => ({ id: m.key, ...m.payload.val() })
+            );
         });
     }
 }

@@ -22,7 +22,6 @@ export const routes: Routes = [
     { path: 'matches/:id/edit', component: MatchFormComponent }
 ];
 
-
 @NgModule({
     declarations: [
         MatchListComponent,
