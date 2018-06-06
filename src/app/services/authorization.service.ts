@@ -1,13 +1,16 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs/Observable";
-import { User } from "firebase";
+import { User as FirebaseUser } from "firebase";
+import { User } from "../models/User";
 import { auth } from 'firebase/app';
 import { AngularFireDatabase } from "angularfire2/database";
 
 @Injectable() export class AuthorizationService {
 
-    public user: User;
+    public user: FirebaseUser;
+
+    private userTableName = '/users';
 
     constructor(
         private authService: AngularFireAuth,
@@ -18,10 +21,13 @@ import { AngularFireDatabase } from "angularfire2/database";
 
     public login() {
         this.authService.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(result => {
-            console.log('test');
-            // if (this.user) {
-            //     this.database.list('/users').set('/user', this.user.email);
-            // }
+            const currentUser = this.authService.auth.currentUser;
+            let user = {
+                email: currentUser.email,
+                name: currentUser.displayName
+            };
+
+            this.database.object(`${this.userTableName}/${currentUser.uid}`).update(user);
         });
     }
 
@@ -29,11 +35,27 @@ import { AngularFireDatabase } from "angularfire2/database";
         this.authService.auth.signOut();
     }
 
+    public updateGamesWon(newGamesWon: number) {
+        const currentUser = this.authService.auth.currentUser;
+
+        let user = {
+            email: currentUser.email,
+            name: currentUser.displayName,
+            gamesWon: newGamesWon
+        };
+
+        this.database.object(`${this.userTableName}/${currentUser.uid}`).update(user);
+    }
+
     public getCurrentUser(): User {
-        if (this.user) {
-            return this.user
-        } else {
-            return undefined;
-        }
+        const currentUser = this.authService.auth.currentUser;
+        let user;
+
+        this.database.object(`${this.userTableName}/${currentUser.uid}`).valueChanges().subscribe(result => {
+            let user = result as User;
+            return user;
+        });
+
+        return undefined;
     }
 }
