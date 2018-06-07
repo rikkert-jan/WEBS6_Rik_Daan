@@ -1,1 +1,15 @@
 @import '../../variables.scss';
+
+.login-container {
+    float: right;
+
+    .login-name {
+        display: inline-block;
+        font-weight: bold;
+        margin-right: $default-margin;
+    }
+
+    button {
+        width: $default-button-width;
+    }
+}

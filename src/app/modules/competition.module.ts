@@ -8,7 +8,6 @@ import { Competition } from "../models/competition";
 
 // components
 import { CompetitionListComponent } from '../components/competition-list/competition-list.component';
-import { CompetitionListDetailComponent } from '../components/competition-list-detail/competition-list-detail.component';
 import { CompetitionFormComponent } from '../components/competition-form/competition-form.component';
 import { CompetitionDetailComponent } from '../components/competition-detail/competition-detail.component';
 import { CompetitionUsersInputComponent } from '../components/competition-users-input/competition-users-input.component';
@@ -31,7 +30,6 @@ export const routes: Routes = [
 @NgModule({
     declarations: [
         CompetitionListComponent,
-        CompetitionListDetailComponent,
         CompetitionFormComponent,
         CompetitionDetailComponent,
         CompetitionUsersInputComponent,
