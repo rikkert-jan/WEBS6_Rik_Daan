@@ -1,4 +1,7 @@
+import { Match } from "../models/match";
+
 export class Round {
-    id: number;
-    matches: any[];
+    id: string;
+    number: number;
+    matches: Match[];
 }

@@ -26,7 +26,8 @@ export class CompetitionFormComponent implements OnInit {
         this.competition.rounds = [];
         this.competition.creator = null;
         this.competition.winner = null;
-
+        this.competition.dateInMs = new Date(this.competition.date).getTime();
+        console.log(this.competition);
         if (this.competitionId) {
             this.competitionService.updateCompetition(this.competitionId, this.competition);
         } else {
@@ -45,6 +46,5 @@ export class CompetitionFormComponent implements OnInit {
                 }
             });
         }
-
     }
 }

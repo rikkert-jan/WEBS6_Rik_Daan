@@ -6,5 +6,6 @@ export class Match {
     creator: User;
     participants: User[];
     startingTime: Date;
+    startingTimeInMs: number;
     winner: User;
 }
