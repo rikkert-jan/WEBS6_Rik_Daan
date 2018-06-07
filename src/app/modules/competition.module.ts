@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 // models
-import { User } from "../models/user";
 import { Competition } from "../models/competition";
 
 // components
@@ -18,6 +17,8 @@ import { CompetitionUsersComponent } from '../components/competition-users/compe
 // services
 import { CompetitionService } from '../services/competition.service';
 import { UserService } from '../services/user.service';
+import { MatchService } from '../services/match.service';
+import { RoundService } from '../services/round.service';
 
 export const routes: Routes = [
     { path: 'competitions', component: CompetitionListComponent },
@@ -43,7 +44,9 @@ export const routes: Routes = [
     ],
     providers: [
         CompetitionService,
-        UserService
+        UserService,
+        MatchService,
+        RoundService
     ],
     bootstrap: [CompetitionListComponent]
 })

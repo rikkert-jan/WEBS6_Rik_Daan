@@ -27,18 +27,18 @@ export class MatchService {
     }
 
     public deleteMatch(key: string) {
-        this.matches.remove(key);
+        return this.matches.remove(key);
     }
 
     public createMatch(match: Match) {
         var newMatch = match;
         newMatch.id = null;
-        this.matches.push(newMatch);
+        return this.matches.push(newMatch);
     }
 
     public updateMatch(id: string, match: Match) {
         var updatedMatch = match;
         updatedMatch.id = null;
-        this.matches.update(id, updatedMatch);
+        return this.matches.update(id, updatedMatch);
     }
 }
