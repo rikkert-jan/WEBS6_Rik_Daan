@@ -8,7 +8,6 @@ import { Match } from "../models/match";
 
 // components
 import { MatchListComponent } from '../components/match-list/match-list.component';
-import { MatchListDetailComponent } from '../components/match-list-detail/match-list-detail.component';
 import { MatchFormComponent } from '../components/match-form/match-form.component';
 import { MatchDetailComponent } from '../components/match-detail/match-detail.component';
 
@@ -25,7 +24,6 @@ export const routes: Routes = [
 @NgModule({
     declarations: [
         MatchListComponent,
-        MatchListDetailComponent,
         MatchFormComponent,
         MatchDetailComponent
     ],

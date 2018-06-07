@@ -21,4 +21,8 @@ export class MatchListComponent implements OnInit {
             );
         });
     }
+
+    public deleteMatch(match: Match) {
+        this.matchService.deleteMatch(match.id.toString());
+    }
 }

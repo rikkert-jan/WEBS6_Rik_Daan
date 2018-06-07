@@ -1,19 +1,25 @@
-<div class="ui raised segment">
-    <h2 class="ui header">Add Match</h2>
+<div class="container">
+    <h1>Add Match</h1>
     <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
 
-        <div class="field">
-            <label for="statusInput">Status</label>
-            <select name="status" id="statusInput" [(ngModel)]="match.status">
-                <option value="OPEN">Open</option>                    
-                <option value="STARTED">Gestart</option>
-            </select>
-        </div>
-        <div class="field">
-            <label for="startingTimeInput">Starting Time</label>
-            <input type="datetime-local" id="startingTimeInput" name="startingTime" [(ngModel)]="match.startingTime">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row no-gutter">
+                    <div class="col-md-6">
+                        <label for="statusInput">Status</label>
+                        <select class="form-control" name="status" id="statusInput" [(ngModel)]="match.status">
+                            <option value="OPEN">Open</option>
+                            <option value="STARTED">Gestart</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="startingTimeInput">Starting Time</label>
+                <input class="form-control" type="datetime-local" id="startingTimeInput" name="startingTime" [(ngModel)]="match.startingTime">
+            </div>
         </div>
 
-        <button type="submit" class="ui button">Submit</button>
+        <button class="btn btn-success" type="submit">Submit</button>
     </form>
 </div>

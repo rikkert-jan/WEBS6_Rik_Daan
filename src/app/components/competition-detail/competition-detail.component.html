@@ -1,10 +1,33 @@
-<div>
-    <p><b>Id: </b>{{competition.id}}</p>
-    <p><b>Name: </b>{{competition.name}}</p>
-    <p><b>Type: </b>{{competition.type}}</p>    
-    <p><b>Date: </b>{{competition.date}}</p>
-    <p><b>Max. Participants: </b>{{competition.maxAmountOfParticipants}}</p>
-    <p><b>Match duration: </b>{{competition.minutesPerMatch}}</p> 
-    
+<div class="container">
+
+    <h1>Details for {{ competition.name }}</h1>
+
+    <table class="table table-sm">
+        <tr>
+            <th>Id</th>
+            <td>{{competition.id}}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{competition.name}}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{competition.type}}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{competition.date}}</td>
+        </tr>
+        <tr>
+            <th>Max Participants</th>
+            <td>{{competition.maxAmountOfParticipants}}</td>
+        </tr>
+        <tr>
+            <th>Match duration</th>
+            <td>{{competition.minutesPerMatch}}</td>
+        </tr>
+    </table>
+
     <competition-users [competition]='competition'></competition-users>
 </div>

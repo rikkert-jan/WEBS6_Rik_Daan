@@ -1,6 +1,36 @@
-<ul>
-    <li class="text" *ngFor="let match of matches">
-        <match-list-detail [match]='match'></match-list-detail>
-    </li>
-</ul>
-<a routerLink="/matches/add" routerLinkActive="active">Add Match</a>        
+<div class="container">
+    <a class="btn btn-success" routerLink="/matches/add" routerLinkActive="active">Add Match</a>
+
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Starting time
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Detail
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+        <tr *ngFor="let match of matches">
+            <td>{{ match.startingTime }}</td>
+            <td>{{ match.status }}</td>
+            <td>
+                <a class="btn btn-info" routerLink="/matches/{{match.id}}" routerLinkActive="active">Detail</a>
+            </td>
+            <td>
+                <a class="btn btn-warning" routerLink="/matches/{{match.id}}/edit" routerLinkActive="active">Edit</a>
+            </td>
+            <td>
+                <button class="btn btn-danger" (click)='deleteMatch()'>Delete</button>
+            </td>
+        </tr>
+    </table>
+</div>

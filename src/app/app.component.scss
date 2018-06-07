@@ -1,0 +1,14 @@
+@import './variables.scss';
+
+.nav-bar {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: $navbar-base;
+    margin-bottom: $default-margin;
+
+    .btn-info {
+        width: $default-button-width;
+        margin-right: 10px;
+    }
+
+}

@@ -1,6 +1,40 @@
-<ul>
-    <li class="text" *ngFor="let competition of competitions">
-        <competition-list-detail [competition]='competition'></competition-list-detail>
-    </li>
-</ul>
-<a routerLink="/competitions/add" routerLinkActive="active">Add Competition</a>        
+<div class="container">
+    <a class="btn btn-success" routerLink="/competitions/add" routerLinkActive="active">Add Competition</a>
+
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Detail
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+        <tr *ngFor="let competition of competitions">
+            <td>{{ competition.name }}</td>
+            <td>{{ competition.type }}</td>
+            <td>{{ competition.date }}</td>
+            <td>
+                <a class="btn btn-info" routerLink="/competitions/{{competition.id}}" routerLinkActive="active">Details</a>
+            </td>
+            <td>
+                <a class="btn btn-warning" routerLink="/competitions/{{competition.id}}/edit" routerLinkActive="active">Edit</a>
+            </td>
+            <td>
+                <button class="btn btn-danger" (click)='deleteCompetition(competition)'>Delete</button>
+            </td>
+        </tr>
+    </table>
+</div>
