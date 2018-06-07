@@ -24,7 +24,6 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 
 export const routes: Routes = [
-    { path: '', component: AppComponent },
 ];
 
 
