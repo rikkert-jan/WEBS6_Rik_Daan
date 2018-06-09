@@ -23,11 +23,11 @@ import { Match } from "../models/match";
     }
 
     public getAllUsersForMatch(match: Match): User[] {
-        let filteredList: User[];
+        let filteredList: User[] = [];
 
         match.participants.forEach(participant => {
-            this.database.object(`${this.userTableName}/${participant.id}`).valueChanges().subscribe(result => {
-                filteredList.push(result as User);
+            this.database.object(`${this.userTableName}/${participant.id}`).snapshotChanges().subscribe(user => {
+                filteredList.push({ id: user.key, ...user.payload.val() } as User);
             });
         });
 
@@ -35,11 +35,11 @@ import { Match } from "../models/match";
     }
 
     public getAllUsersForCompetition(competition: Competition): User[] {
-        let filteredList: User[];
+        let filteredList: User[] = [];
 
         competition.participants.forEach(participant => {
-            this.database.object(`${this.userTableName}/${participant.id}`).valueChanges().subscribe(result => {
-                filteredList.push(result as User);
+            this.database.object(`${this.userTableName}/${participant.id}`).snapshotChanges().subscribe(user => {
+                filteredList.push({id: user.key, ...user.payload.val()} as User);
             });
         });
 

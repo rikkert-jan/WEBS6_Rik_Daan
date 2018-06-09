@@ -38,6 +38,36 @@
 
         </div>
 
+        <div *ngIf="competition.type == 'TOURNAMENT'" class="row">
+            <div class="col-md-12" *ngIf="competition.type == 'TOURNAMENT'">
+                <label for="numberOfRoundsInput">Number of rounds</label>
+                <input class="form-control" type="number" id="numberOfRoundsInput" name="numberOfRounds" [(ngModel)]="competition.numberOfRounds">
+            </div>
+        </div>
+
+        <div *ngIf="competition.type == 'POULE'" class="row">
+            <div class="col-md-12" *ngIf="competition.type == 'POULE'">
+                <label for="numberOfPoulesInput">Number of poules</label>
+                <input class="form-control" type="number" id="numberOfPoulesInput" name="numberOfPoules" [(ngModel)]="competition.numberOfPoules">
+            </div>
+
+            <div *ngIf="competition.numberOfPoules && competition.numberOfPoules > 0" class="col-md-12">
+                <span class="btn btn-success" (click)="generatePoules()">Generate Poules</span>
+            </div>
+
+            <div *ngIf="poules" class="col-md-12">
+                <label>Poules:</label>
+            </div>
+
+            <div class="col-md-12" *ngIf="poules">
+                <ul *ngFor="let poule of poules" class="col-md-3 list-group" [dragula]='"bag-one"' [dragulaModel]='poule'>
+                    <li class="list-group-item" *ngFor="let participant of poule.participants">
+                        <span>{{participant.id}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
 </div>

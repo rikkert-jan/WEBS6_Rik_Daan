@@ -32,7 +32,7 @@ export class MatchService {
 
     public createMatch(match: Match) {
         var newMatch = match;
-        newMatch.id = null;
+        //newMatch.id = null;
         return this.matches.push(newMatch);
     }
 
