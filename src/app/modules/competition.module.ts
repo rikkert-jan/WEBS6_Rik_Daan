@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DragulaModule } from 'ng2-dragula';
 
 // models
 import { Competition } from "../models/competition";
@@ -12,6 +13,8 @@ import { CompetitionFormComponent } from '../components/competition-form/competi
 import { CompetitionDetailComponent } from '../components/competition-detail/competition-detail.component';
 import { CompetitionUsersInputComponent } from '../components/competition-users-input/competition-users-input.component';
 import { CompetitionUsersComponent } from '../components/competition-users/competition-users.component';
+import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.component';
+import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
 
 // services
 import { CompetitionService } from '../services/competition.service';
@@ -22,8 +25,9 @@ import { RoundService } from '../services/round.service';
 export const routes: Routes = [
     { path: 'competitions', component: CompetitionListComponent },
     { path: 'competitions/add', component: CompetitionFormComponent },
-    { path: 'competitions/:id', component: CompetitionDetailComponent },   
-    { path: 'competitions/:id/edit', component: CompetitionFormComponent }
+    { path: 'competitions/:id', component: CompetitionDetailComponent },
+    { path: 'competitions/:id/edit', component: CompetitionFormComponent },
+    { path: 'competitions/:id/scheme', component: MatchSchemeComponent },
 ];
 
 
@@ -33,12 +37,15 @@ export const routes: Routes = [
         CompetitionFormComponent,
         CompetitionDetailComponent,
         CompetitionUsersInputComponent,
-        CompetitionUsersComponent
+        CompetitionUsersComponent,
+        MatchSchemeComponent,
+        MatchSimpleComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes),
+        DragulaModule
     ],
     providers: [
         CompetitionService,

@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row" *ngFor="let round of competition.rounds">
+        <table class="table table-striped col">
+            <thead>
+                <tr>
+                    <th>
+                        <span *ngIf="competition.type == 'TOURNAMENT'">Round:</span>
+                        <span *ngIf="competition.type == 'POULE'">Poule:</span>
+                        <span>{{round.number}}</span>
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let match of round.matches" match-simple [match]="match">
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

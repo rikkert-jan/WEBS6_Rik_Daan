@@ -24,6 +24,7 @@
     "angularfire2": "^5.0.0-rc.6",
     "core-js": "^2.5.7",
     "firebase": "4.13.1",
+    "ng2-dragula": "^1.5.0",
     "ngx-bootstrap": "^3.0.0",
     "rxjs": "^6.2.0",
     "rxjs-compat": "^6.1.0",
