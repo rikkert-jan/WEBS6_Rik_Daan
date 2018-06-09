@@ -12,6 +12,6 @@ export class Competition {
     dateInMs: number;
     maxAmountOfParticipants: number;
     minutesPerMatch: number;
-    creator: User;
-    winner: User;
+    creator: string;
+    winner: string;
 }

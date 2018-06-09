@@ -9,9 +9,11 @@ import { Match } from "../app/models/match";
 // components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/log-in/log-in.component';
+import { NotificationComponent } from '../app/components/notifications/notification.component';
 
 // services
 import { AuthorizationService } from '../app/services/authorization.service';
+import { NotificationService } from './services/notification.service';
 
 // modules
 import { MatchModule } from '../app/modules/match.module';
@@ -30,7 +32,8 @@ export const routes: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent
+        LoginComponent,
+        NotificationComponent
     ],
     imports: [
         MatchModule,
@@ -44,6 +47,7 @@ export const routes: Routes = [
     ],
     providers: [
         AuthorizationService,
+        NotificationService
     ],
     bootstrap: [AppComponent]
 })

@@ -2,6 +2,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { CompetitionService } from "../../services/competition.service";
 import { Competition } from "../../models/competition";
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/User';
 
 @Component({
     selector: 'competition-detail',
@@ -11,10 +13,12 @@ import { Competition } from "../../models/competition";
 export class CompetitionDetailComponent {
 
     @Input() competition: Competition = new Competition();
+    public creator: User = new User();
     private competitionId: string;
 
     constructor(
         private competitionService: CompetitionService,
+        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router
     ) { }
@@ -25,6 +29,9 @@ export class CompetitionDetailComponent {
             this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
                 if (competition.key) {
                     this.competition = {id: competition.key, ...competition.payload.val()}
+                    this.userService.getUser(this.competition.creator).snapshotChanges().subscribe(user => {
+                        this.creator = {id: user.key, ...user.payload.val()};
+                    });
                 } else {
                     this.competition = new Competition();
                 }

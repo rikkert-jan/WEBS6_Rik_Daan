@@ -1,0 +1,21 @@
+@import '../../variables.scss';
+
+.notification {
+    position: absolute;
+    right: $default-margin;
+    visibility: hidden;
+    width: $default-button-width;
+    border-radius: 4px;
+    color: white;
+    padding: $default-margin;
+}
+
+.success {
+    visibility: visible !important;
+    background-color: #5cb85c;
+}
+
+.error {
+    visibility: visible !important;
+    background-color: #d9534f;
+}

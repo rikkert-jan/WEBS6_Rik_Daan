@@ -1,5 +1,6 @@
 <div class="container">
-    <a class="btn btn-success" routerLink="/competitions/add" routerLinkActive="active">Add Competition</a>
+
+    <a class="btn btn-success" [ngClass]="{'hidden': !auth.user}" routerLink="/competitions/add" routerLinkActive="active">Add Competition</a>
 
     <table class="table table-hover">
         <tr>
@@ -22,7 +23,7 @@
                 Delete
             </th>
         </tr>
-        <tr *ngFor="let competition of competitions">
+        <tr *ngFor="let competition of competitions" [ngClass]="{'active': !auth.user || competition.creator === auth.user.uid}">
             <td>{{ competition.name }}</td>
             <td>{{ competition.type }}</td>
             <td>{{ competition.date }}</td>
@@ -30,10 +31,10 @@
                 <a class="btn btn-info" routerLink="/competitions/{{competition.id}}" routerLinkActive="active">Details</a>
             </td>
             <td>
-                <a class="btn btn-warning" routerLink="/competitions/{{competition.id}}/edit" routerLinkActive="active">Edit</a>
+                <a class="btn btn-warning" [ngClass]="{'hidden': !auth.user || competition.creator !== auth.user.uid}" routerLink="/competitions/{{competition.id}}/edit" routerLinkActive="active">Edit</a>
             </td>
             <td>
-                <button class="btn btn-danger" (click)='deleteCompetition(competition)'>Delete</button>
+                <button class="btn btn-danger" [ngClass]="{'hidden': !auth.user || competition.creator !== auth.user.uid}" (click)='deleteCompetition(competition)'>Delete</button>
             </td>
         </tr>
     </table>

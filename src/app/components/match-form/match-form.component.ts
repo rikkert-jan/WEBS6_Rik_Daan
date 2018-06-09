@@ -2,6 +2,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatchService } from "../../services/match.service";
 import { Match } from "../../models/match";
+import { AuthorizationService } from '../../services/authorization.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'match-form',
@@ -16,18 +18,32 @@ export class MatchFormComponent implements OnInit {
     constructor(
         private matchService: MatchService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private auth: AuthorizationService,
+        private notificationService: NotificationService
     ) { }
 
     onSubmit(form: any): void {
-        this.match.creator = null;
-        this.match.participants = [];
-        this.match.winner = null;
+        if (this.auth.user) {
+            this.match.participants = [];
+            this.match.winner = null;
 
-        if (this.matchId) {
-            this.matchService.updateMatch(this.matchId, this.match);
+            if (this.matchId) {
+                if (this.match.creator === this.auth.user.uid) {
+                    this.matchService.updateMatch(this.matchId, this.match);
+                    this.notificationService.sendSuccess('Match updated');
+                    this.router.navigate(['/matches']);
+                } else {
+                    this.notificationService.sendError('You are not the owner of this match');
+                }
+            } else {
+                this.match.creator = this.auth.user.uid;
+                this.matchService.createMatch(this.match);
+                this.notificationService.sendSuccess('Match created');
+                this.router.navigate(['/matches']);
+            }
         } else {
-            this.matchService.createMatch(this.match);
+            this.notificationService.sendError('You need to be logged in to perform this action');
         }
     }
 
