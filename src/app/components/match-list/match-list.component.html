@@ -1,5 +1,5 @@
 <div class="container">
-    <a class="btn btn-success" routerLink="/matches/add" routerLinkActive="active">Add Match</a>
+    <a class="btn btn-success" [ngClass]="{'hidden': !auth.user}" routerLink="/matches/add" routerLinkActive="active">Add Match</a>
 
     <table class="table table-hover">
         <tr>
@@ -26,10 +26,10 @@
                 <a class="btn btn-info" routerLink="/matches/{{match.id}}" routerLinkActive="active">Detail</a>
             </td>
             <td>
-                <a class="btn btn-warning" routerLink="/matches/{{match.id}}/edit" routerLinkActive="active">Edit</a>
+                <a class="btn btn-warning" [ngClass]="{'hidden': !auth.user || match.creator !== auth.user.uid}" routerLink="/matches/{{match.id}}/edit" routerLinkActive="active">Edit</a>
             </td>
             <td>
-                <button class="btn btn-danger" (click)='deleteMatch()'>Delete</button>
+                <button class="btn btn-danger" [ngClass]="{'hidden': !auth.user || match.creator !== auth.user.uid}" (click)='deleteMatch(match)'>Delete</button>
             </td>
         </tr>
     </table>

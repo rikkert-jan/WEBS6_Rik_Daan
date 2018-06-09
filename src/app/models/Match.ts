@@ -3,9 +3,9 @@ import { User } from "./User";
 export class Match {
     id: string;
     status: string;
-    creator: User;
+    creator: string;
     participants: User[];
     startingTime: Date;
     startingTimeInMs: number;
-    winner: User;
+    winner: string;
 }

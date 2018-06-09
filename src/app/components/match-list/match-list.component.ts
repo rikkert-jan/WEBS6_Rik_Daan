@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatchService } from "../../services/match.service";
 import { Match } from "../../models/match";
+import { AuthorizationService } from '../../services/authorization.service';
 
 @Component({
     selector: 'match-list',
@@ -12,7 +13,10 @@ export class MatchListComponent implements OnInit {
 
     public matches: Match[];
 
-    constructor(private matchService: MatchService) { }
+    constructor(
+        private matchService: MatchService,
+        private auth: AuthorizationService
+    ) { }
 
     ngOnInit() {
         this.matchService.matches.snapshotChanges().subscribe((matches) => {
@@ -23,6 +27,10 @@ export class MatchListComponent implements OnInit {
     }
 
     public deleteMatch(match: Match) {
-        this.matchService.deleteMatch(match.id.toString());
+        if (this.auth.user) {
+            if (match.creator === this.auth.user.uid) {
+                this.matchService.deleteMatch(match.id.toString());
+            }
+        }
     }
 }

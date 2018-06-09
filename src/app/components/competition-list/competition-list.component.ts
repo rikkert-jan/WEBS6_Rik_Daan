@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CompetitionService } from "../../services/competition.service";
 import { Competition } from "../../models/competition";
 import { AuthorizationService } from '../../services/authorization.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
     selector: 'competition-list',
@@ -15,7 +16,8 @@ export class CompetitionListComponent implements OnInit {
 
     constructor(
         private competitionService: CompetitionService,
-        private auth: AuthorizationService
+        private auth: AuthorizationService,
+        private notificationService: NotificationService
     ) { }
 
     ngOnInit() {
@@ -27,6 +29,10 @@ export class CompetitionListComponent implements OnInit {
     }
 
     public deleteCompetition(competition: Competition) {
-        this.competitionService.deleteCompetition(competition.id.toString());
+        if (this.auth.user) {
+            if (competition.creator === this.auth.user.uid) {
+                this.competitionService.deleteCompetition(competition.id.toString());
+            }
+        }
     }
 }
