@@ -38,6 +38,11 @@
 
     <h2>Participants</h2>
 
+    <div class="button-spacing" [ngClass]="{'hidden': !auth.user}">
+        <button *ngIf="canParticipate" class="btn btn-success" (click)="joinCompetition()">Join competition</button>
+        <button *ngIf="!canParticipate && alreadyParticipating" class="btn btn-warning" (click)="leaveCompetition()">Leave competition</button>
+    </div>
+
     <table class="table table-sm">
         <tr>
             <th>
