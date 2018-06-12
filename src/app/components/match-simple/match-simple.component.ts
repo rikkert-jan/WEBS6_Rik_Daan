@@ -24,7 +24,7 @@ export class MatchSimpleComponent {
             this.matchService.getMatch(this.match.id).snapshotChanges().subscribe(match => {
                 if (match.key) {
                     this.match = { id: match.key, ...match.payload.val() }
-                    this.match.participants = this.userService.getAllUsersForMatch(this.match);
+                    // this.match.participants = this.userService.getAllUsersForMatch(this.match);
                 } else {
                     this.match = new Match();
                 }

@@ -2,8 +2,9 @@
 
     <h1>Details for {{ competition.name }}</h1>
 
-    <a class="btn btn-info" routerLink="/competitions/{{competition.id}}/scheme" routerLinkActive="active">Show scheme</a>    
-    <br><br>    
+    <a class="btn btn-info" routerLink="/competitions/{{competition.id}}/scheme" routerLinkActive="active">Show scheme</a>
+    <br>
+    <br>
     <table class="table table-sm">
         <tr>
             <th>Id</th>
@@ -35,5 +36,30 @@
         </tr>
     </table>
 
-    <competition-users [competition]='competition'></competition-users>
+    <h2>Participants</h2>
+
+    <table class="table table-sm">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Games won
+            </th>
+        </tr>
+        <tr *ngFor="let user of participants; let i = index">
+            <td>
+                {{ i + 1 }}
+            </td>
+            <td>
+                {{ user.name }}
+            </td>
+            <td>
+                {{ user.gamesWon }}
+            </td>
+        </tr>
+    </table>
 </div>

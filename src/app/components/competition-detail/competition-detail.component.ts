@@ -14,6 +14,7 @@ export class CompetitionDetailComponent {
 
     @Input() competition: Competition = new Competition();
     public creator: User = new User();
+    public participants: User[] = [];
     private competitionId: string;
 
     constructor(
@@ -31,6 +32,12 @@ export class CompetitionDetailComponent {
                     this.competition = {id: competition.key, ...competition.payload.val()}
                     this.userService.getUser(this.competition.creator).snapshotChanges().subscribe(user => {
                         this.creator = {id: user.key, ...user.payload.val()};
+                    });
+                    this.competition.participants.forEach(participant => {
+                        this.userService.getUser(participant.id).snapshotChanges().subscribe(user => {
+                            let u = {id: user.key, ...user.payload.val()};
+                            this.participants.push(u);
+                        });
                     });
                 } else {
                     this.competition = new Competition();

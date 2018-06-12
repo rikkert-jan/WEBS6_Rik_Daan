@@ -12,7 +12,6 @@ import { CompetitionListComponent } from '../components/competition-list/competi
 import { CompetitionFormComponent } from '../components/competition-form/competition-form.component';
 import { CompetitionDetailComponent } from '../components/competition-detail/competition-detail.component';
 import { CompetitionUsersInputComponent } from '../components/competition-users-input/competition-users-input.component';
-import { CompetitionUsersComponent } from '../components/competition-users/competition-users.component';
 import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.component';
 import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
 
@@ -37,7 +36,6 @@ export const routes: Routes = [
         CompetitionFormComponent,
         CompetitionDetailComponent,
         CompetitionUsersInputComponent,
-        CompetitionUsersComponent,
         MatchSchemeComponent,
         MatchSimpleComponent
     ],
