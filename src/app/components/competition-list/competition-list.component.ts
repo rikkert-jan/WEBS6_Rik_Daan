@@ -13,6 +13,8 @@ import { NotificationService } from '../../services/notification.service';
 export class CompetitionListComponent implements OnInit {
 
     public competitions: Competition[];
+    public filteredCompetitions: Competition[];
+    public filterOwned = false;
 
     constructor(
         private competitionService: CompetitionService,
@@ -25,6 +27,7 @@ export class CompetitionListComponent implements OnInit {
             this.competitions = competitions.map(
                 competition => ({ id: competition.key, ...competition.payload.val() })
             );
+            this.filteredCompetitions = this.competitions;
         });
     }
 
@@ -33,6 +36,20 @@ export class CompetitionListComponent implements OnInit {
             if (competition.creator === this.auth.user.uid) {
                 this.competitionService.deleteCompetition(competition.id.toString());
             }
+        }
+    }
+
+    public toggleOwned() {
+        this.filterOwned = !this.filterOwned;
+        if (this.filterOwned) {
+            this.filteredCompetitions = [];
+            this.competitions.forEach(competition => {
+                if (competition.creator === this.auth.user.uid) {
+                    this.filteredCompetitions.push(competition);
+                }
+            });
+        } else {
+            this.filteredCompetitions = this.competitions;
         }
     }
 }

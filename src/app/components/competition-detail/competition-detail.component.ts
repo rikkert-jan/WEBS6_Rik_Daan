@@ -36,28 +36,33 @@ export class CompetitionDetailComponent {
         if (this.competitionId) {
             this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
                 if (competition.key) {
-                    this.competition = {id: competition.key, ...competition.payload.val()}
+                    this.competition = { id: competition.key, ...competition.payload.val() }
                     this.userService.getUser(this.competition.creator).snapshotChanges().subscribe(user => {
-                        this.creator = {id: user.key, ...user.payload.val()};
+                        this.creator = { id: user.key, ...user.payload.val() };
                     });
 
-                    this.competition.participants.forEach(participant => {
-                        this.userService.getUser(participant.id).snapshotChanges().subscribe(user => {
-                            let u = {id: user.key, ...user.payload.val()};
-                            this.participants.push(u);
-                            if (u.id === this.auth.user.uid && this.canParticipate) {
-                                this.alreadyParticipating = true;
-                                this.canParticipate = false;
-                            }
+                    if (this.competition.participants) {
+                        this.participants = [];
+                        this.competition.participants.forEach(participant => {
+                            this.userService.getUser(participant.id).snapshotChanges().subscribe(user => {
+                                let u = { id: user.key, ...user.payload.val() };
+                                this.participants.push(u);
+                                if (u.id === this.auth.user.uid && this.canParticipate) {
+                                    this.alreadyParticipating = true;
+                                    this.canParticipate = false;
+                                }
+                            });
                         });
-                    });
+                    } else {
+                        this.competition.participants = [];
+                    }
                 } else {
                     this.competition = new Competition();
                 }
             });
         }
     }
-    
+
     public joinCompetition() {
         let canJoin = true;
         this.participants.forEach(participant => {
@@ -66,7 +71,10 @@ export class CompetitionDetailComponent {
             }
         });
 
-        if (canJoin && this.competition.participants.length < this.competition.maxAmountOfParticipants && this.competition.date <= new Date()) {
+        if (canJoin
+            && this.competition.participants.length < this.competition.maxAmountOfParticipants
+            && this.competition.date <= new Date()) {
+
             this.auth.getCurrentUser().subscribe(user => {
                 let u = user as User;
                 this.competition.participants.push(u);

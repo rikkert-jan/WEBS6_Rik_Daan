@@ -7,3 +7,12 @@ table {
 .btn {
     width: $default-button-width;
 }
+
+.btn.btn-toggle {
+    background-color: #a3a3a3;
+    color: white;
+}
+
+.btn.btn-toggle.toggled {
+    background-color: lightgreen;
+}
