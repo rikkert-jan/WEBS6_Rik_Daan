@@ -40,7 +40,6 @@ export const routes: Routes = [
         CompetitionFormComponent,
         CompetitionDetailComponent,
         CompetitionUsersInputComponent,
-        CompetitionUsersComponent,
         MatchSchemeComponent,
         MatchSimpleComponent,
         GraphVisDirective,

@@ -3,6 +3,7 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angular
 import { User } from "../models/user";
 import { Competition } from "../models/competition";
 import { Match } from "../models/match";
+import { Observable } from "rxjs/internal/Observable";
 
 @Injectable() export class UserService {
 
