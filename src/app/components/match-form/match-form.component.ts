@@ -19,7 +19,7 @@ export class MatchFormComponent implements OnInit {
         private matchService: MatchService,
         private route: ActivatedRoute,
         private router: Router,
-        private auth: AuthorizationService,
+        public auth: AuthorizationService,
         private notificationService: NotificationService
     ) { }
 

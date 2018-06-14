@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="competition.type != 'KNOCKOUT'" class="container">
     <div class="row" *ngFor="let round of competition.rounds">
         <table class="table table-striped col">
             <thead>
@@ -18,4 +18,7 @@
             </tbody>
         </table>
     </div>
+</div>
+<div *ngIf="competition.type == 'KNOCKOUT'" class="container" style="width: 100%;">
+    <knockout-scheme [matches]="matches"></knockout-scheme>
 </div>

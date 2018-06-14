@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs/Observable";
 import { User as FirebaseUser } from "firebase";
-import { User } from "../models/User";
+import { User } from "../models/user";
 import { auth } from 'firebase/app';
 import { AngularFireDatabase } from "angularfire2/database";
 
@@ -13,7 +13,7 @@ import { AngularFireDatabase } from "angularfire2/database";
     private userTableName = '/users';
 
     constructor(
-        private authService: AngularFireAuth,
+        public authService: AngularFireAuth,
         private database: AngularFireDatabase
     ) {
         this.authService.authState.subscribe(u => this.user = u);

@@ -41,6 +41,8 @@ export class CompetitionFormComponent implements OnInit {
             var pouleParticipants = [];
             var poule: any = {};
             for (var j = 0; j < playersPerPoule; j++) {
+                this.userService.getUser(participants[j].id);
+                //console.log(this.userService.user);
                 pouleParticipants.push(participants[j] as User);
             }
             participants.splice(participants[0], playersPerPoule)

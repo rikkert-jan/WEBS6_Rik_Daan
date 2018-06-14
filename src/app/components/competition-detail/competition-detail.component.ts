@@ -3,9 +3,9 @@ import { Component, Input } from '@angular/core';
 import { CompetitionService } from "../../services/competition.service";
 import { Competition } from "../../models/competition";
 import { UserService } from '../../services/user.service';
-import { User } from '../../models/User';
 import { AuthorizationService } from '../../services/authorization.service';
 import { NotificationService } from '../../services/notification.service';
+import { User } from '../../models/user';
 
 @Component({
     selector: 'competition-detail',
