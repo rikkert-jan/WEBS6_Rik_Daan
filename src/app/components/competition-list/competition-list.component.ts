@@ -16,7 +16,7 @@ export class CompetitionListComponent implements OnInit {
 
     constructor(
         private competitionService: CompetitionService,
-        private auth: AuthorizationService,
+        public auth: AuthorizationService,
         private notificationService: NotificationService
     ) { }
 

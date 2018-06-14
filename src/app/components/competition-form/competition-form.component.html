@@ -60,11 +60,7 @@
             </div>
 
             <div class="col-md-12" *ngIf="poules">
-                <ul *ngFor="let poule of poules" class="col-md-3 list-group" [dragula]='"bag-one"' [dragulaModel]='poule'>
-                    <li class="list-group-item" *ngFor="let participant of poule.participants">
-                        <span>{{participant.id}}</span>
-                    </li>
-                </ul>
+                <pooluser *ngFor="let poule of poules" [poule]="poule"></pooluser>
             </div>
         </div>
 
