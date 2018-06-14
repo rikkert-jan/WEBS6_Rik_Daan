@@ -15,7 +15,7 @@ export class MatchListComponent implements OnInit {
 
     constructor(
         private matchService: MatchService,
-        private auth: AuthorizationService
+        public auth: AuthorizationService
     ) { }
 
     ngOnInit() {

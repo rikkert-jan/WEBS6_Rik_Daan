@@ -12,9 +12,12 @@ import { CompetitionListComponent } from '../components/competition-list/competi
 import { CompetitionFormComponent } from '../components/competition-form/competition-form.component';
 import { CompetitionDetailComponent } from '../components/competition-detail/competition-detail.component';
 import { CompetitionUsersInputComponent } from '../components/competition-users-input/competition-users-input.component';
+import { PoolUserComponent } from '../components/competition-user-pool/competition-user-pool.component';
 import { CompetitionUsersComponent } from '../components/competition-users/competition-users.component';
 import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.component';
 import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
+import { GraphVisDirective } from '../components/match-scheme/graphvis.directive';
+import { KnockoutSchemeComponent } from '../components/knockout-scheme/knockout-scheme.component';
 
 // services
 import { CompetitionService } from '../services/competition.service';
@@ -39,7 +42,10 @@ export const routes: Routes = [
         CompetitionUsersInputComponent,
         CompetitionUsersComponent,
         MatchSchemeComponent,
-        MatchSimpleComponent
+        MatchSimpleComponent,
+        GraphVisDirective,
+        PoolUserComponent,
+        KnockoutSchemeComponent,
     ],
     imports: [
         BrowserModule,

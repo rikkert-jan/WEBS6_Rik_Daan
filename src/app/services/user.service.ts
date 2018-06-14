@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
-import { User } from "../models/User";
+import { User } from "../models/user";
 import { Competition } from "../models/competition";
 import { Match } from "../models/match";
 
@@ -24,12 +24,13 @@ import { Match } from "../models/match";
 
     public getAllUsersForMatch(match: Match): User[] {
         let filteredList: User[] = [];
-
-        match.participants.forEach(participant => {
-            this.database.object(`${this.userTableName}/${participant.id}`).snapshotChanges().subscribe(user => {
-                filteredList.push({ id: user.key, ...user.payload.val() } as User);
+        if (match.participants) {
+            match.participants.forEach(participant => {
+                this.database.object(`${this.userTableName}/${participant.id}`).snapshotChanges().subscribe(user => {
+                    filteredList.push({ id: user.key, ...user.payload.val() } as User);
+                });
             });
-        });
+        }
 
         return filteredList;
     }
@@ -39,7 +40,7 @@ import { Match } from "../models/match";
 
         competition.participants.forEach(participant => {
             this.database.object(`${this.userTableName}/${participant.id}`).snapshotChanges().subscribe(user => {
-                filteredList.push({id: user.key, ...user.payload.val()} as User);
+                filteredList.push({ id: user.key, ...user.payload.val() } as User);
             });
         });
 
