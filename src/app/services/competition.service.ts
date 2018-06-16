@@ -156,10 +156,11 @@ export class CompetitionService {
         var pouleParticipantCombos = this.calculateUniqueMatches(pouleParticipants);
         var pouleParticipantCombosPool = this.calculateUniqueMatches(pouleParticipants);
         var numberOfRounds = this.calculateNumberOfUserOccurencesInCombos(pouleParticipantCombos);
-
+                
         for (var i = 0; i < numberOfRounds; i++) {
             var round = new Round();
             round.number = i + 1;
+            round.pouleNumber = pouleNumber + 1;
             round.matches = this.generateMatches(pouleParticipantCombos, pouleParticipantCombosPool, rounds, competition, i);
             rounds.push(round);
         }
@@ -186,6 +187,7 @@ export class CompetitionService {
     public createMatches(rounds: Round[], roundsReferences: Round[]) {
         rounds.forEach(round => {
             var roundReference = new Round();
+            roundReference.pouleNumber = round.pouleNumber;
             roundReference.number = round.number;
             roundReference.matches = [];
             round.matches.forEach(match => {

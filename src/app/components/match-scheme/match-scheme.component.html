@@ -1,5 +1,5 @@
-<div *ngIf="competition.type != 'KNOCKOUT'">
-    <div class="row col-md-12" *ngFor="let round of competition.rounds">
+<div *ngIf="competition.type == 'POULE'">
+    <!--<div class="row col-md-12" *ngFor="let round of competition.rounds">
         <table class="table table-bordered table-striped col">
             <thead>
                 <tr>
@@ -18,7 +18,11 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div>-->
+    <poule-scheme *ngIf="competition && competition.rounds && competition.poules" [rounds]="competition.rounds" [poules]="competition.poules"></poule-scheme>
+</div>
+<div *ngIf="competition.type == 'TOURNAMENT'" style="width: 100%;">
+    <tournament-scheme *ngIf="competition && competition.rounds" [rounds]="competition.rounds"></tournament-scheme>
 </div>
 <div *ngIf="competition.type == 'KNOCKOUT'" style="width: 100%;">
     <knockout-scheme [matches]="matches"></knockout-scheme>

@@ -1,0 +1,24 @@
+<div class="border row col-md-6" *ngFor="let poule of roundsPerPoule">
+    <p><b>Poule: {{poule.pouleNumber}}</b></p>
+    <p><span *ngFor="let participant of poule.participants">{{participant.name}}&nbsp;&nbsp;&nbsp;</span></p>
+    <div class="row col-md-12" *ngFor="let round of poule.rounds">
+        <table class="table table-bordered table-striped col">
+            <thead>
+                <tr>
+                    <th>
+                        <span>Round:</span>
+                        <span>{{round.number}}</span>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th>Time</th>
+                    <th>Winner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let match of round.matches" match-simple [match]="match"></tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+</div>

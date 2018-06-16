@@ -17,9 +17,11 @@ import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.co
 import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
 import { KnockoutSchemeComponent } from '../components/knockout-scheme/knockout-scheme.component';
 import { CompetitionMatchParticipantsComponent } from '../components/competition-match-participants/competition-match-participants';
+import {TournamentSchemeComponent} from "../components/tournament-scheme/tournament-scheme.component";
+import {PouleSchemeComponent} from "../components/poule-scheme/poule-scheme.component";
 
 //Directives
-import { GraphVisDirective } from '../components/match-scheme/graphvis.directive';
+import { GraphVisDirective } from '../components/knockout-scheme/graphvis.directive';
 
 // services
 import { CompetitionService } from '../services/competition.service';
@@ -46,6 +48,8 @@ export const routes: Routes = [
         GraphVisDirective,
         PoolUserComponent,
         KnockoutSchemeComponent,
+        TournamentSchemeComponent,
+        PouleSchemeComponent
     ],
     imports: [
         BrowserModule,
