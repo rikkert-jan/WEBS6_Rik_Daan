@@ -16,6 +16,7 @@ import { PoolUserComponent } from '../components/competition-user-pool/competiti
 import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.component';
 import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
 import { KnockoutSchemeComponent } from '../components/knockout-scheme/knockout-scheme.component';
+import { CompetitionMatchParticipantsComponent } from '../components/competition-match-participants/competition-match-participants';
 
 //Directives
 import { GraphVisDirective } from '../components/match-scheme/graphvis.directive';
@@ -39,6 +40,7 @@ export const routes: Routes = [
         CompetitionFormComponent,
         CompetitionDetailComponent,
         CompetitionUsersInputComponent,
+        CompetitionMatchParticipantsComponent,
         MatchSchemeComponent,
         MatchSimpleComponent,
         GraphVisDirective,

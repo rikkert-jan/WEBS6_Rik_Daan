@@ -1,5 +1,13 @@
 @import '../../variables.scss';
 
-.table {
+.table-limited {
     width: $competition-table-width;
+}
+
+.table-double {
+    width: 2 * $competition-table-width;
+}
+
+.button-spacing {
+    margin-bottom: $default-margin;
 }
