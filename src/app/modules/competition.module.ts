@@ -15,14 +15,15 @@ import { CompetitionUsersInputComponent } from '../components/competition-users-
 import { PoolUserComponent } from '../components/competition-user-pool/competition-user-pool.component';
 import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.component';
 import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
-import { GraphVisDirective } from '../components/match-scheme/graphvis.directive';
 import { KnockoutSchemeComponent } from '../components/knockout-scheme/knockout-scheme.component';
+
+//Directives
+import { GraphVisDirective } from '../components/match-scheme/graphvis.directive';
 
 // services
 import { CompetitionService } from '../services/competition.service';
 import { UserService } from '../services/user.service';
 import { MatchService } from '../services/match.service';
-import { RoundService } from '../services/round.service';
 
 export const routes: Routes = [
     { path: 'competitions', component: CompetitionListComponent },
@@ -54,7 +55,6 @@ export const routes: Routes = [
         CompetitionService,
         UserService,
         MatchService,
-        RoundService
     ],
     bootstrap: [CompetitionListComponent]
 })
