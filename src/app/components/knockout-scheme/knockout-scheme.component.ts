@@ -1,4 +1,3 @@
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { MatchService } from "../../services/match.service";
 import { UserService } from "../../services/user.service";
@@ -31,13 +30,12 @@ export class KnockoutSchemeComponent {
         for (var j = 0; j < this.matches.length; j++) {
             var match = this.matches[j];
             var node = {
-                id: match.id, label: "??? VS. ???", shape: "box", color: {}, shapeProperties: {
+                id: match.id, label: "??? VS. ???\nTime: " + new Date(match.startingTimeInMs).toLocaleString(), shape: "box", color: {}, shapeProperties: {
                     borderRadius: 3
                 }
             };
 
             if (match.prevMatch1 && match.prevMatch2) {
-                console.log(match.prevMatch1);
                 var edge1 = { from: match.id, to: match.prevMatch1.id };
                 var edge2 = { from: match.id, to: match.prevMatch2.id };
                 this.matchEdges.push(edge1);
@@ -46,6 +44,7 @@ export class KnockoutSchemeComponent {
 
             if (match.participants) {
                 node.label = ((match.participants[0]) ? match.participants[0].name : "???") + " VS. " + ((match.participants[1]) ? match.participants[1].name : "???")
+                node.label += "\nTime: " + new Date(match.startingTimeInMs).toLocaleString();
             }
 
             this.matchNodes.push(node);
@@ -60,8 +59,8 @@ export class KnockoutSchemeComponent {
                     if (matches[j].key == this.matches[i].id) {
                         this.matches[i] = { id: matches[j].key, ...matches[j].payload.val() }
                         this.calls--;
-                        if(matches[i].payload.val().participants){
-                            for(var k = 0; k < matches[i].payload.val().participants.length; k++){
+                        if (matches[i].payload.val().participants) {
+                            for (var k = 0; k < matches[i].payload.val().participants.length; k++) {
                                 this.userCalls++;
                             }
                         }
@@ -94,8 +93,6 @@ export class KnockoutSchemeComponent {
         }
         if (this.userCalls == 0 && this.usersReady && !this.nodesReady) {
             this.generateTreeNodes();
-            console.log(this.matchNodes);
-            console.log(this.matchEdges);
             this.graphData["nodes"] = this.matchNodes;
             this.graphData["edges"] = this.matchEdges;
             this.nodesReady = true;

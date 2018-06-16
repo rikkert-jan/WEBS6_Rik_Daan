@@ -15,15 +15,18 @@ import { CompetitionUsersInputComponent } from '../components/competition-users-
 import { PoolUserComponent } from '../components/competition-user-pool/competition-user-pool.component';
 import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.component';
 import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
-import { GraphVisDirective } from '../components/match-scheme/graphvis.directive';
 import { KnockoutSchemeComponent } from '../components/knockout-scheme/knockout-scheme.component';
 import { CompetitionMatchParticipantsComponent } from '../components/competition-match-participants/competition-match-participants';
+import {TournamentSchemeComponent} from "../components/tournament-scheme/tournament-scheme.component";
+import {PouleSchemeComponent} from "../components/poule-scheme/poule-scheme.component";
+
+//Directives
+import { GraphVisDirective } from '../components/knockout-scheme/graphvis.directive';
 
 // services
 import { CompetitionService } from '../services/competition.service';
 import { UserService } from '../services/user.service';
 import { MatchService } from '../services/match.service';
-import { RoundService } from '../services/round.service';
 
 export const routes: Routes = [
     { path: 'competitions', component: CompetitionListComponent },
@@ -32,7 +35,6 @@ export const routes: Routes = [
     { path: 'competitions/:id/edit', component: CompetitionFormComponent },
     { path: 'competitions/:id/scheme', component: MatchSchemeComponent },
 ];
-
 
 @NgModule({
     declarations: [
@@ -46,6 +48,8 @@ export const routes: Routes = [
         GraphVisDirective,
         PoolUserComponent,
         KnockoutSchemeComponent,
+        TournamentSchemeComponent,
+        PouleSchemeComponent
     ],
     imports: [
         BrowserModule,
@@ -57,7 +61,6 @@ export const routes: Routes = [
         CompetitionService,
         UserService,
         MatchService,
-        RoundService
     ],
     bootstrap: [CompetitionListComponent]
 })

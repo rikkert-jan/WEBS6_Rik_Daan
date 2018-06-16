@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
 import { MatchService } from "../services/match.service";
-import { RoundService } from "../services/round.service";
 import { Competition } from "../models/competition";
 import { Round } from "../models/round";
 import { Match } from "../models/match";
@@ -15,14 +14,11 @@ export class CompetitionService {
     public competitions: AngularFireList<Competition>;
     public competition: AngularFireObject<Competition>;
 
-    public realCompetition: Competition;
-
     private competitionTableName = '/competitions';
     private participantIndex = 0;
 
     constructor(private database: AngularFireDatabase,
         private matchService: MatchService,
-        private roundService: RoundService
     ) {
         this.getCompetitions();
     }
@@ -34,31 +30,6 @@ export class CompetitionService {
 
     public getCompetition(key: string): AngularFireObject<Competition> {
         this.competition = this.database.object(this.competitionTableName + "/" + key);
-        return this.competition;
-    }
-
-    public getCompetitionMatches() {
-        this.competition.snapshotChanges().subscribe(competition => {
-            this.matchService.getMatchesCompleteData().snapshotChanges().subscribe(matches => {
-                for (var i = 0; i < matches.length; i++) {
-                    if (competition.payload.val()) {
-                        for (var j = 0; j < competition.payload.val().rounds.length; j++) {
-                            for (var k = 0; k < competition.payload.val().rounds[j].matches.length; k++) {
-                                if (matches[i].key == competition.payload.val().rounds[j].matches[k].id) {
-                                    console.log(matches[i].payload.val().rounds[j].matches[k]);
-                                    competition.payload.val().rounds[j].matches[k] = { id: matches[i].key, ...matches[i].payload.val() };
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    }
-
-    public getCompetition_(key: string): AngularFireObject<Competition> {
-        this.competition = this.database.object(this.competitionTableName + "/" + key);
-        this.getCompetitionMatches();
         return this.competition;
     }
 
@@ -76,16 +47,20 @@ export class CompetitionService {
     }
 
     public createCompetition(competition: Competition) {
-        switch (competition.type) {
-            case "TOURNAMENT":
-                this.generateTournament(competition);
-                break;
-            case "POULE":
-                this.generatePoule(competition);
-                break;
-            case "KNOCKOUT":
-                this.generateKnockout(competition);
-                break;
+        if (competition.participants.length == competition.maxAmountOfParticipants) {
+            if (competition.rounds || competition.rounds.length == 0) {
+                switch (competition.type) {
+                    case "TOURNAMENT":
+                        this.generateTournament(competition);
+                        break;
+                    case "POULE":
+                        this.generatePoules(competition);
+                        break;
+                    case "KNOCKOUT":
+                        this.generateKnockout(competition);
+                        break;
+                }
+            }
         }
         var newCompetition = competition;
         newCompetition.id = null;
@@ -93,37 +68,24 @@ export class CompetitionService {
     }
 
     public updateCompetition(id: string, competition: Competition) {
-        var updatedCompetition = competition;
-        updatedCompetition.id = null;
-        this.competitions.update(id, updatedCompetition);
-    }
-
-    public calculateUniqueMatches(participants: User[]) {
-        var participantCombos = [];
-
-        for (var i = 0; i < participants.length; i++) {
-            for (var j = 0; j < participants.length; j++) {
-                var user1 = participants[i];
-                var user2 = participants[j];
-                var shouldAdd = true;
-                if (participantCombos.length != 0) {
-                    for (var k = 0; k < participantCombos.length; k++) {
-                        var participantCombo = participantCombos[k];
-                        if (this.arraysEqual(participantCombo.users, [user1.id, user2.id])) {
-                            shouldAdd = false;
-                            continue;
-                        }
-                    }
-                }
-                if (user1.id == user2.id) {
-                    shouldAdd = false;
-                }
-                if (shouldAdd) {
-                    participantCombos.push({ users: [user1.id, user2.id]/*, occurences: 0*/ })
+        if (competition.participants.length == competition.maxAmountOfParticipants) {
+            if (competition.rounds || competition.rounds.length == 0) {
+                switch (competition.type) {
+                    case "TOURNAMENT":
+                        this.generateTournament(competition);
+                        break;
+                    case "POULE":
+                        this.generatePoules(competition);
+                        break;
+                    case "KNOCKOUT":
+                        this.generateKnockout(competition);
+                        break;
                 }
             }
         }
-        return participantCombos;
+        var updatedCompetition = competition;
+        updatedCompetition.id = null;
+        this.competitions.update(id, updatedCompetition);
     }
 
     public generateKnockout(competition: Competition) {
@@ -134,7 +96,6 @@ export class CompetitionService {
         var numberOfMatches = 1;
         var participantCombos = this.calculateUniqueMatches(competition.participants);
         this.generateKnockOutMatch(rounds, competition.creator, numberOfRounds, competition.minutesPerMatch, competition.date, competition.participants);
-        console.log(rounds[0]);
         competition.rounds = rounds;
     }
 
@@ -154,7 +115,7 @@ export class CompetitionService {
             match.participants.push({ id: participants[this.participantIndex].id } as User);
             match.participants.push({ id: participants[this.participantIndex + 1].id } as User);
             this.participantIndex += 2;
-        } 
+        }
         if (roundNumber > 0) {
             match.prevMatch1 = { id: this.generateKnockOutMatch(rounds, creator, roundNumber - 1, minutesPerMatch, date, participants).id } as Match;
             match.prevMatch2 = { id: this.generateKnockOutMatch(rounds, creator, roundNumber - 1, minutesPerMatch, date, participants).id } as Match;
@@ -181,99 +142,28 @@ export class CompetitionService {
         return match;
     }
 
-    public doesRoundExist(rounds: Round[], roundNumber: number) {
-        for (var i = 0; i < rounds.length; i++) {
-            if (rounds[i].number == roundNumber) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public generatePouleRoundParticipantCombos(participants: any[]) {
-        var participantCombosPerRound = [];
-        var participantCombos = [];
-        for (var i = 0; i < participants.length; i++) {
-            var combo = [];
-            var user1 = participants[i];
-            for (var j = 0; j < participants.length; j++) {
-                var user2 = participants[j];
-                var shouldAddCombo = true;
-                if (user1 !== user2) {
-                    combo = { users: [user1.id, user2.id] } as any;
-                    if (participantCombos.length > 0) {
-                        for (var k = 0; k < participantCombos.length; k++) {
-                            var existingCombo = participantCombos[i];
-                            if (existingCombo.users[0] == user1.id || existingCombo.users[1] == user1.id) {
-                                shouldAddCombo = false;
-                            }
-                            if (existingCombo.users[0] == user2.id || existingCombo.users[1] == user2.id) {
-                                shouldAddCombo = false;
-                            }
-                        }
-                    }
-                }
-                if (shouldAddCombo) {
-                    participantCombos.push(combo);
-                }
-            }
-            participantCombosPerRound.push(participantCombos);
-            participantCombos = [];
-        }
-        return participantCombosPerRound;
-    }
-
-    public generatePouleRoundParticipantCombos_FOUT(participants: any[]) {
-        var participantCombosOverRounds = [];
-        var participantCombos = [];
-        for (var i = 0; i < participants.length; i++) {
-            for (var j = 0; j < participants.length; j++) {
-                var user1 = participants[i];
-                var user2 = participants[j];
-                var shouldAdd = true;
-                if (participantCombos.length != 0) {
-                    for (var k = 0; k < participantCombos.length; k++) {
-                        var participantCombo = participantCombos[k];
-                        if (this.arraysEqual(participantCombo.users, [user1.id, user2.id])) {
-                            shouldAdd = false;
-                            continue;
-                        }
-                    }
-                }
-                if (user1.id == user2.id) {
-                    shouldAdd = false;
-                }
-                if (shouldAdd) {
-                    participantCombos.push({ users: [user1.id, user2.id]/*, occurences: 0*/ })
-                }
-            }
-        }
-        return participantCombos;
-    }
-
-    public generatePoule(competition: Competition) {
+    public generatePoules(competition: Competition) {
         var rounds: Round[] = [];
         var roundsReferences: Round[] = [];
-
-        for (var i = 0; i < competition.numberOfPoules; i++) {
-            var pouleParticipants: any[] = competition.poules[i].participants;
-            var participantCombos = this.calculateUniqueMatches(pouleParticipants);
-            var participantCombosPerRound = this.generatePouleRoundParticipantCombos(pouleParticipants);
-            var participantCombosCopy: any[] = [];
-
-            for (var j = 0; j < participantCombos.length; j++)
-                participantCombosCopy.push(participantCombos[j]);
-
-            var round = new Round();
-            round.number = i + 1;
-            round.matches = this.generateMatches(participantCombos, participantCombosCopy, rounds, competition, i);
-            rounds.push(round);
+        for (var i = 0; i < competition.poules.length; i++) {
+            this.generatePoule(competition, i, competition.poules[i].participants, rounds);
         }
-
-        //TODO: EEN SPELER MAG NIET 2X OM DEZELFDE TIJD SPELEN!!
-
         this.createMatches(rounds, roundsReferences);
         competition.rounds = roundsReferences;
+    }
+
+    public generatePoule(competition: Competition, pouleNumber: number, pouleParticipants: User[], rounds: Round[]) {
+        var pouleParticipantCombos = this.calculateUniqueMatches(pouleParticipants);
+        var pouleParticipantCombosPool = this.calculateUniqueMatches(pouleParticipants);
+        var numberOfRounds = this.calculateNumberOfUserOccurencesInCombos(pouleParticipantCombos);
+                
+        for (var i = 0; i < numberOfRounds; i++) {
+            var round = new Round();
+            round.number = i + 1;
+            round.pouleNumber = pouleNumber + 1;
+            round.matches = this.generateMatches(pouleParticipantCombos, pouleParticipantCombosPool, rounds, competition, i);
+            rounds.push(round);
+        }
     }
 
     public generateTournament(competition: Competition) {
@@ -297,6 +187,7 @@ export class CompetitionService {
     public createMatches(rounds: Round[], roundsReferences: Round[]) {
         rounds.forEach(round => {
             var roundReference = new Round();
+            roundReference.pouleNumber = round.pouleNumber;
             roundReference.number = round.number;
             roundReference.matches = [];
             round.matches.forEach(match => {
@@ -325,15 +216,13 @@ export class CompetitionService {
                 var user2Id = participantCombosReference[i].users[1];
 
                 if (matches.length < participantCombosReference.length / 2 || competition.type != "TOURNAMENT") {
-                    if (!this.havePlayedInThisRound(user1Id, user2Id, matches) || competition.type != "TOURNAMENT") {
+                    if (!this.havePlayedInThisRound(user1Id, user2Id, matches)) {
                         if (!this.havePlayedAgainstEachOther({ id: user1Id } as User, { id: user2Id } as User, rounds)) {
-                            if (!this.havePlayedAtThisTime({ id: user1Id } as User, { id: user2Id } as User, matches) || competition.type != "POULE") {
-                                if (match.participants.length < 2) {
-                                    match.participants.push({ id: user1Id } as User);
-                                    match.participants.push({ id: user2Id } as User);
-                                    participantCombosPool.splice(participantCombosPool[i], 1)
-                                    matches.push(match);
-                                } 6
+                            if (match.participants.length < 2) {
+                                match.participants.push({ id: user1Id } as User);
+                                match.participants.push({ id: user2Id } as User);
+                                participantCombosPool.splice(participantCombosPool[i], 1)
+                                matches.push(match);
                             }
                         }
                     }
@@ -343,19 +232,55 @@ export class CompetitionService {
         return matches;
     }
 
-    public havePlayedAtThisTime(user1: User, user2: User, matches: Match[]) {
-        if (matches.length > 0) {
-            for (var i = 0; i < matches.length; i++) {
-                var match = matches[i];
-                for (var j = 0; j < matches[i].participants.length; j++) {
-                    var users = matches[i].participants;
-                    if (JSON.stringify(users).indexOf(JSON.stringify({ id: user1.id })) != -1) {
-                        return true;
-                    }
-                    if (JSON.stringify(users).indexOf(JSON.stringify({ id: user2.id })) != -1) {
-                        return true;
+
+    public calculateNumberOfUserOccurencesInCombos(userCombos: any[]): number {
+        var userToTrack = userCombos[0].users[0];
+        var numberOfOccurencesOfUser = 0;
+        for (var i = 0; i < userCombos.length; i++) {
+            var combo = userCombos[i];
+            var comboUser1 = combo.users[0];
+            var comboUser2 = combo.users[1];
+
+            if (comboUser1 == userToTrack || comboUser2 == userToTrack) {
+                numberOfOccurencesOfUser++;
+            }
+        }
+
+        return numberOfOccurencesOfUser;
+    }
+
+    public calculateUniqueMatches(participants: User[]) {
+        var participantCombos = [];
+
+        for (var i = 0; i < participants.length; i++) {
+            for (var j = 0; j < participants.length; j++) {
+                var user1 = participants[i];
+                var user2 = participants[j];
+                var shouldAdd = true;
+                if (participantCombos.length != 0) {
+                    for (var k = 0; k < participantCombos.length; k++) {
+                        var participantCombo = participantCombos[k];
+                        if (this.arraysEqual(participantCombo.users, [user1.id, user2.id])) {
+                            shouldAdd = false;
+                            continue;
+                        }
                     }
                 }
+                if (user1.id == user2.id) {
+                    shouldAdd = false;
+                }
+                if (shouldAdd) {
+                    participantCombos.push({ users: [user1.id, user2.id] })
+                }
+            }
+        }
+        return participantCombos;
+    }
+
+    public doesRoundExist(rounds: Round[], roundNumber: number) {
+        for (var i = 0; i < rounds.length; i++) {
+            if (rounds[i].number == roundNumber) {
+                return true;
             }
         }
         return false;

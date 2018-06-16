@@ -16,11 +16,11 @@ import { DataSet } from 'vis';
 export class MatchSchemeComponent implements OnInit {
     graphData = {};
 
+    @Input() matchNodes: any[] = [];
+    @Input() matchEdges: any[] = [];
     public competition: Competition = new Competition();
     public competitionId: string;
     public matches: Match[] = [];
-    @Input() matchNodes: any[] = [];
-    @Input() matchEdges: any[] = [];
     private differ: any;
 
     private loadedMatches = false;

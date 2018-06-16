@@ -19,7 +19,6 @@ export class MatchDetailComponent {
         private router: Router
     ) { }
 
-
     ngOnInit() {
         this.matchId = this.route.snapshot.paramMap.get('id');
         if (this.matchId) {

@@ -1,0 +1,19 @@
+<div class="row col-md-12" *ngFor="let round of rounds">
+    <table class="table table-bordered table-striped col">
+        <thead>
+            <tr>
+                <th>
+                    <span>Round:</span>
+                    <span>{{round.number}}</span>
+                </th>
+                <th></th>
+                <th></th>
+                <th>Time</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let match of round.matches" match-simple [match]="match"></tr>
+        </tbody>
+    </table>
+</div>

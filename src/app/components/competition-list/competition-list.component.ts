@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CompetitionService } from "../../services/competition.service";
-import { Competition } from "../../models/competition";
 import { AuthorizationService } from '../../services/authorization.service';
 import { NotificationService } from '../../services/notification.service';
+import { CompetitionService } from "../../services/competition.service";
+import { Competition } from "../../models/competition";
 
 @Component({
     selector: 'competition-list',
     templateUrl: './competition-list.component.html',
     styleUrls: ['./competition-list.component.scss'],
-    providers: [CompetitionService]
 })
 export class CompetitionListComponent implements OnInit {
 
