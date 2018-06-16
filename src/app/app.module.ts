@@ -18,6 +18,7 @@ import { NotificationService } from './services/notification.service';
 // modules
 import { MatchModule } from '../app/modules/match.module';
 import { CompetitionModule } from '../app/modules/competition.module';
+import { ButtonsModule } from 'ngx-bootstrap/buttons'
 
 // firebase
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -43,7 +44,8 @@ export const routes: Routes = [
         RouterModule.forRoot(routes),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
-        AngularFireDatabaseModule
+        AngularFireDatabaseModule,
+        ButtonsModule
     ],
     providers: [
         AuthorizationService,
