@@ -2,7 +2,9 @@
 
     <a class="btn btn-success" [ngClass]="{'hidden': !auth.user}" routerLink="/competitions/add" routerLinkActive="active">Add Competition</a>
 
-    <button class="btn btn-toggle" [ngClass]="{'toggled': filterOwned}" [ngClass]="{'hidden': !auth.user || competition.creator !== auth.user.uid}" (click)="toggleOwned()">Toggle owned</button>
+    <button class="btn btn-toggle" [ngClass]="{'toggled': filterCreated}" [ngClass]="{'hidden': !auth.user || competition.creator !== auth.user.uid}" (click)="toggleOwned()">Filter created</button>
+    <button class="btn btn-toggle" [ngClass]="{'toggled': filterParticipating}" [ngClass]="{'hidden': !auth.user || competition.creator !== auth.user.uid}" (click)="toggleParticipating()">Filter Participating</button>
+
 
     <table class="table table-hover">
         <tr>

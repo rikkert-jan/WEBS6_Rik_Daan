@@ -5,7 +5,7 @@
     <a class="btn btn-info" routerLink="/competitions/{{competition.id}}/scheme" routerLinkActive="active">Show scheme</a>
     <br>
     <br>
-    <table class="table table-sm">
+    <table class="table table-sm table-limited">
         <tr>
             <th>Id</th>
             <td>{{competition.id}}</td>
@@ -43,7 +43,7 @@
         <button *ngIf="!canParticipate && alreadyParticipating" class="btn btn-warning" (click)="leaveCompetition()">Leave competition</button>
     </div>
 
-    <table class="table table-sm">
+    <table class="table table-sm table-limited">
         <tr>
             <th>
                 #
@@ -65,6 +65,37 @@
             <td>
                 {{ user.gamesWon }}
             </td>
+        </tr>
+    </table>
+
+    <h2>Matches</h2>
+
+    <table class="table table-sm table-double">
+        <tr>
+            <th>#</th>
+            <th>
+                Status
+            </th>
+            <th>
+                Participants
+            </th>
+            <th>
+                Winner
+            </th>
+            <th>
+                Starting time
+            </th>
+        </tr>
+        <tr *ngFor="let match of matches; let i = index">
+            <td>
+                {{ i + 1 }}
+            </td>
+            <td>{{ match.status }}</td>
+            <td>
+                <competition-match-participants [match]="match"></competition-match-participants>
+            </td>
+            <td>{{ match.winner }}</td>
+            <td>{{ match.startingTime }}</td>
         </tr>
     </table>
 </div>

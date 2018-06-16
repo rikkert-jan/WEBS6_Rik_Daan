@@ -6,6 +6,8 @@ import { UserService } from '../../services/user.service';
 import { AuthorizationService } from '../../services/authorization.service';
 import { NotificationService } from '../../services/notification.service';
 import { User } from '../../models/user';
+import { Match } from '../../models/match';
+import { MatchService } from '../../services/match.service';
 
 @Component({
     selector: 'competition-detail',
@@ -17,8 +19,10 @@ export class CompetitionDetailComponent {
     @Input() competition: Competition = new Competition();
     public creator: User = new User();
     public participants: User[] = [];
+    public matches: Match[] = [];
     public canParticipate = true;
     public alreadyParticipating = false;
+
 
     private competitionId: string;
 
@@ -27,8 +31,9 @@ export class CompetitionDetailComponent {
         private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
-        private auth: AuthorizationService,
-        private notificationService: NotificationService
+        public auth: AuthorizationService,
+        private notificationService: NotificationService,
+        private matchService: MatchService
     ) { }
 
     ngOnInit() {
@@ -36,9 +41,22 @@ export class CompetitionDetailComponent {
         if (this.competitionId) {
             this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
                 if (competition.key) {
-                    this.competition = { id: competition.key, ...competition.payload.val() }
+                    this.competition = { id: competition.key, ...competition.payload.val() };
+
+                    if (this.competition.rounds) {
+                        this.competition.rounds.forEach(round => {
+                            round.matches.forEach(match => {
+                                this.matchService.getMatch(match.id).snapshotChanges().subscribe(m => {
+                                    let n: Match = { id: m.key, ...m.payload.val() };
+                                    this.matches.push(n);
+                                })
+                            });
+                        });
+                    }
+
                     this.userService.getUser(this.competition.creator).snapshotChanges().subscribe(user => {
-                        this.creator = { id: user.key, ...user.payload.val() };
+                        let u: User = { id: user.key, ...user.payload.val() };
+                        this.creator = u;
                     });
 
                     if (this.competition.participants) {
@@ -71,12 +89,17 @@ export class CompetitionDetailComponent {
             }
         });
 
+        let competitionTime = this.competition.date;
+        let currentTime = new Date();
+
+        // && competitionTime > currentTime
+
         if (canJoin
-            && this.competition.participants.length < this.competition.maxAmountOfParticipants
-            && this.competition.date <= new Date()) {
+            && this.competition.participants.length < this.competition.maxAmountOfParticipants) {
 
             this.auth.getCurrentUser().subscribe(user => {
                 let u = user as User;
+                console.log(u);
                 this.competition.participants.push(u);
                 this.competitionService.updateCompetition(this.competition.id, this.competition)
                 this.canParticipate = false;
