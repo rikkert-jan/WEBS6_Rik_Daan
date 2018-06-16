@@ -1,24 +1,4 @@
 <div *ngIf="competition.type == 'POULE'">
-    <!--<div class="row col-md-12" *ngFor="let round of competition.rounds">
-        <table class="table table-bordered table-striped col">
-            <thead>
-                <tr>
-                    <th>
-                        <span>Round:</span>
-                        <span>{{round.number}}</span>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    <th>Time</th>
-                    <th>Winner</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let match of round.matches" match-simple [match]="match">
-                </tr>
-            </tbody>
-        </table>
-    </div>-->
     <poule-scheme *ngIf="competition && competition.rounds && competition.poules" [rounds]="competition.rounds" [poules]="competition.poules"></poule-scheme>
 </div>
 <div *ngIf="competition.type == 'TOURNAMENT'" style="width: 100%;">
