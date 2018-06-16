@@ -1,5 +1,5 @@
-<ul class="col-md-3 list-group" [dragula]='"bag-one"' [dragulaModel]='poule'>
-    <li class="list-group-item" *ngFor="let user of poule.participants">
+<div class="col-md-3 list-group" [dragula]='"bag-one"'>
+    <div class="list-group-item" *ngFor="let user of poule.participants">
         <span *ngIf="user && user.name">{{user.name}}</span>
-    </li>
-</ul>
+    </div>
+</div>

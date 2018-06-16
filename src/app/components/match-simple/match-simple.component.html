@@ -1,3 +1,5 @@
-<td *ngIf="match.participants && match.participants[0]">{{match.participants[0].name}}</td>
+<td><span *ngIf="match.participants && match.participants[0]">{{match.participants[0].name}}</span></td>
 <td> VS. </td>
-<td *ngIf="match.participants && match.participants[1]">{{match.participants[1].name}}</td>
+<td><span *ngIf="match.participants && match.participants[1]">{{match.participants[1].name}}</span></td>
+<td><span *ngIf="match.startingTime">{{match.startingTime.toLocaleString()}}</span></td>
+<td><span *ngIf="match.winner">{{match.winner.name}}</span><span *ngIf="!match.winner">???</span></td>

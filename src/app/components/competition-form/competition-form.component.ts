@@ -1,11 +1,11 @@
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
+import { AuthorizationService } from '../../services/authorization.service';
+import { NotificationService } from '../../services/notification.service';
 import { CompetitionService } from "../../services/competition.service";
 import { UserService } from "../../services/user.service";
 import { Competition } from "../../models/competition";
 import { User } from "../../models/user";
-import { NotificationService } from '../../services/notification.service';
-import { AuthorizationService } from '../../services/authorization.service';
 import { DragulaModule } from 'ng2-dragula';
 
 @Component({
@@ -42,7 +42,6 @@ export class CompetitionFormComponent implements OnInit {
             var poule: any = {};
             for (var j = 0; j < playersPerPoule; j++) {
                 this.userService.getUser(participants[j].id);
-                //console.log(this.userService.user);
                 pouleParticipants.push(participants[j] as User);
             }
             participants.splice(participants[0], playersPerPoule)
@@ -92,5 +91,6 @@ export class CompetitionFormComponent implements OnInit {
                 }
             });
         }
+        
     }
 }

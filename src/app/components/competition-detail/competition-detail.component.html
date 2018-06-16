@@ -2,7 +2,7 @@
 
     <h1>Details for {{ competition.name }}</h1>
 
-    <a class="btn btn-info" routerLink="/competitions/{{competition.id}}/scheme" routerLinkActive="active">Show scheme</a>
+    <a *ngIf="competition.rounds && competition.rounds.length > 0" class="btn btn-info" routerLink="/competitions/{{competition.id}}/scheme" routerLinkActive="active">Show scheme</a>
     <br>
     <br>
     <table class="table table-sm">

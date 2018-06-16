@@ -1,15 +1,16 @@
-<div *ngIf="competition.type != 'KNOCKOUT'" class="container">
-    <div class="row" *ngFor="let round of competition.rounds">
-        <table class="table table-striped col">
+<div *ngIf="competition.type != 'KNOCKOUT'">
+    <div class="row col-md-12" *ngFor="let round of competition.rounds">
+        <table class="table table-bordered table-striped col">
             <thead>
                 <tr>
                     <th>
-                        <span *ngIf="competition.type == 'TOURNAMENT'">Round:</span>
-                        <span *ngIf="competition.type == 'POULE'">Poule:</span>
+                        <span>Round:</span>
                         <span>{{round.number}}</span>
                     </th>
                     <th></th>
                     <th></th>
+                    <th>Time</th>
+                    <th>Winner</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,6 @@
         </table>
     </div>
 </div>
-<div *ngIf="competition.type == 'KNOCKOUT'" class="container" style="width: 100%;">
+<div *ngIf="competition.type == 'KNOCKOUT'" style="width: 100%;">
     <knockout-scheme [matches]="matches"></knockout-scheme>
 </div>

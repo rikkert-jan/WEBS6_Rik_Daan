@@ -1,4 +1,3 @@
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user";
@@ -15,9 +14,7 @@ export class CompetitionUsersInputComponent implements OnInit {
     @Input() competition: Competition;
 
     constructor(
-        private userService: UserService,
-        private route: ActivatedRoute,
-        private router: Router
+        private userService: UserService
     ) { }
 
     ngOnInit() {

@@ -1,8 +1,8 @@
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { MatchService } from "../../services/match.service";
 import { UserService } from "../../services/user.service";
 import { Match } from "../../models/match";
+import { User } from "../../models/user";
 
 @Component({
     selector: '[match-simple]',
@@ -12,10 +12,11 @@ import { Match } from "../../models/match";
 export class MatchSimpleComponent {
 
     @Input() match: Match = new Match();
+    @Input() winner: User;
 
     constructor(
         private matchService: MatchService,
-        private userService: UserService,        
+        private userService: UserService,
     ) { }
 
 
@@ -24,7 +25,13 @@ export class MatchSimpleComponent {
             this.matchService.getMatch(this.match.id).snapshotChanges().subscribe(match => {
                 if (match.key) {
                     this.match = { id: match.key, ...match.payload.val() }
-                    // this.match.participants = this.userService.getAllUsersForMatch(this.match);
+                    this.match.participants = this.userService.getAllUsersForMatch(this.match);
+                    this.match.startingTime = new Date(this.match.startingTimeInMs);
+                    if (this.match.winner) {
+                        this.userService.getUser(this.match.winner).snapshotChanges().subscribe(user => {
+                            this.winner = { id: user.key, ...user.payload.val() };
+                        })
+                    }
                 } else {
                     this.match = new Match();
                 }

@@ -13,7 +13,6 @@ import { CompetitionFormComponent } from '../components/competition-form/competi
 import { CompetitionDetailComponent } from '../components/competition-detail/competition-detail.component';
 import { CompetitionUsersInputComponent } from '../components/competition-users-input/competition-users-input.component';
 import { PoolUserComponent } from '../components/competition-user-pool/competition-user-pool.component';
-import { CompetitionUsersComponent } from '../components/competition-users/competition-users.component';
 import { MatchSchemeComponent } from '../components/match-scheme/match-scheme.component';
 import { MatchSimpleComponent } from '../components/match-simple/match-simple.component';
 import { GraphVisDirective } from '../components/match-scheme/graphvis.directive';
@@ -32,7 +31,6 @@ export const routes: Routes = [
     { path: 'competitions/:id/edit', component: CompetitionFormComponent },
     { path: 'competitions/:id/scheme', component: MatchSchemeComponent },
 ];
-
 
 @NgModule({
     declarations: [

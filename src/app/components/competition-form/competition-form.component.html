@@ -52,7 +52,7 @@
             </div>
 
             <div *ngIf="competition.numberOfPoules && competition.numberOfPoules > 0" class="col-md-12">
-                <span class="btn btn-success" (click)="generatePoules()">Generate Poules</span>
+                <span class="btn btn-warning" (click)="generatePoules()">Generate Poules</span>
             </div>
 
             <div *ngIf="poules" class="col-md-12">
@@ -63,7 +63,8 @@
                 <pooluser *ngFor="let poule of poules" [poule]="poule"></pooluser>
             </div>
         </div>
-
-        <button type="submit" class="btn btn-success">Submit</button>
+               
+        <button type="submit" class="btn btn-success" *ngIf="competition.participants && competition.participants.length < competition.maxAmountOfParticipants">Save competition</button>
+        <button type="submit" class="btn btn-success" *ngIf="competition.participants && competition.participants.length == competition.maxAmountOfParticipants">Save competition</button>        
     </form>
 </div>

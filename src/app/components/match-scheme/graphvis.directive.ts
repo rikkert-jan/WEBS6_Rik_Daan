@@ -36,9 +36,8 @@ export class GraphVisDirective {
     }
 
     ngDoCheck() {
-        var changes = this.differ.diff(this.graphData); // check for changes
+        var changes = this.differ.diff(this.graphData);
         if (changes) {
-            //console.log(this.graphData);
             this.network.destroy();
             this.network = null;
             var options = {
