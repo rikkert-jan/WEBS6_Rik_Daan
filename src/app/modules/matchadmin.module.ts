@@ -7,21 +7,19 @@ import { FormsModule } from '@angular/forms';
 import { Match } from "../models/match";
 
 // components
-import { MatchListComponent } from '../components/match-list/match-list.component';
-import { MatchDetailComponent } from '../components/match-detail/match-detail.component';
+import { MatchFormComponent } from '../components/match-form/match-form.component';
 
 // services
 import { MatchService } from '../services/match.service';
 
 export const routes: Routes = [
-    { path: 'matches', component: MatchListComponent },
-    { path: 'matches/:id', component: MatchDetailComponent },
+    { path: 'matches/add', component: MatchFormComponent },
+    { path: 'matches/:id/edit', component: MatchFormComponent }
 ];
 
 @NgModule({
     declarations: [
-        MatchListComponent,
-        MatchDetailComponent
+        MatchFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -31,6 +29,6 @@ export const routes: Routes = [
     providers: [
         MatchService
     ],
-    bootstrap: [MatchListComponent]
+    bootstrap: [MatchFormComponent]
 })
-export class MatchModule { }
+export class MatchAdminModule { }
