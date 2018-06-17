@@ -48,8 +48,4 @@ import { AngularFireDatabase } from "angularfire2/database";
 
         this.database.object(`${this.userTableName}/${currentUser.uid}`).update(user);
     }
-
-    public getCurrentUser() {
-        return this.database.object(`${this.userTableName}/${this.authService.auth.currentUser.uid}`).valueChanges();
-    }
 }
