@@ -23,7 +23,7 @@
             <td>{{ match.startingTime }}</td>
             <td>{{ match.status }}</td>
             <td>
-                <a class="btn btn-info" routerLink="/matches/{{match.id}}" routerLinkActive="active">Detail</a>
+                <a class="btn btn-info" routerLink="/matches/{{match.id}}/detail" routerLinkActive="active">Detail</a>
             </td>
             <td>
                 <a class="btn btn-warning" [ngClass]="{'hidden': !auth.user || match.creator !== auth.user.uid}" routerLink="/matches/{{match.id}}/edit" routerLinkActive="active">Edit</a>

@@ -15,7 +15,7 @@ import { MatchService } from '../services/match.service';
 
 export const routes: Routes = [
     { path: 'matches', component: MatchListComponent },
-    { path: 'matches/:id', component: MatchDetailComponent },
+    { path: 'matches/:id/detail', component: MatchDetailComponent },
 ];
 
 @NgModule({
