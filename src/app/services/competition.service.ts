@@ -134,6 +134,7 @@ export class CompetitionService {
                 match.id = ref.key;
                 var round = new Round();
                 round.number = roundNumber;
+                round.pouleNumber = null;                
                 round.matches = [{ id: ref.key }] as Match[];
                 rounds.push(round);
             }
@@ -177,6 +178,7 @@ export class CompetitionService {
         for (var i = 0; i < competition.numberOfRounds; i++) {
             var round = new Round();
             round.number = i + 1;
+            round.pouleNumber = null;
             round.matches = this.generateMatches(participantCombos, participantCombosCopy, rounds, competition, i);
             rounds.push(round);
         }

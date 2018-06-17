@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ButtonsModule } from 'ngx-bootstrap/buttons'
 
 // models
 import { Match } from "../app/models/match";
@@ -17,8 +18,10 @@ import { NotificationService } from './services/notification.service';
 
 // modules
 import { MatchModule } from '../app/modules/match.module';
+import { MatchAdminModule } from '../app/modules/matchadmin.module';
 import { CompetitionModule } from '../app/modules/competition.module';
-import { ButtonsModule } from 'ngx-bootstrap/buttons'
+import { CompetitionAdminModule } from '../app/modules/competitionadmin.module';
+import { SchemeModule } from '../app/modules/schemes.module';
 
 // firebase
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -38,7 +41,10 @@ export const routes: Routes = [
     ],
     imports: [
         MatchModule,
+        MatchAdminModule,
         CompetitionModule,
+        CompetitionAdminModule,
+        SchemeModule,
         BrowserModule,
         FormsModule,
         RouterModule.forRoot(routes),

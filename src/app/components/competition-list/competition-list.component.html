@@ -32,7 +32,7 @@
             <td>{{ competition.type }}</td>
             <td>{{ competition.date }}</td>
             <td>
-                <a class="btn btn-info" routerLink="/competitions/{{competition.id}}" routerLinkActive="active">Details</a>
+                <a class="btn btn-info" routerLink="/competitions/{{competition.id}}/detail" routerLinkActive="active">Details</a>
             </td>
             <td>
                 <a class="btn btn-warning" [ngClass]="{'hidden': !auth.user || competition.creator !== auth.user.uid}" routerLink="/competitions/{{competition.id}}/edit" routerLinkActive="active">Edit</a>
