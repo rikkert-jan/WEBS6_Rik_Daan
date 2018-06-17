@@ -97,9 +97,8 @@ export class CompetitionDetailComponent {
         if (canJoin
             && this.competition.participants.length < this.competition.maxAmountOfParticipants) {
 
-            this.auth.getCurrentUser().subscribe(user => {
-                let u = user as User;
-                console.log(u);
+            this.userService.getUser(this.auth.user.uid).snapshotChanges().subscribe(user => {
+                let u: User = { id: user.key, ...user.payload.val() };
                 this.competition.participants.push(u);
                 this.competitionService.updateCompetition(this.competition.id, this.competition)
                 this.canParticipate = false;
@@ -113,8 +112,8 @@ export class CompetitionDetailComponent {
     }
 
     public leaveCompetition() {
-        this.auth.getCurrentUser().subscribe(user => {
-            let u = user as User;
+        this.userService.getUser(this.auth.user.uid).snapshotChanges().subscribe(user => {
+            let u: User = { id: user.key, ...user.payload.val() };
             let index = this.competition.participants.indexOf(u);
             this.competition.participants.splice(index, 1);
             this.competitionService.updateCompetition(this.competition.id, this.competition)
