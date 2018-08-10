@@ -1,27 +1,78 @@
-/*import { TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { APP_BASE_HREF } from '@angular/common';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ButtonsModule } from 'ngx-bootstrap/buttons'
+
+// models
+import { Match } from "../app/models/match";
+
+// components
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/log-in/log-in.component';
+import { NotificationComponent } from '../app/components/notifications/notification.component';
+
+// services
+import { AuthorizationService } from '../app/services/authorization.service';
+import { NotificationService } from './services/notification.service';
+
+// modules
+import { MatchModule } from '../app/modules/match.module';
+import { MatchAdminModule } from '../app/modules/matchadmin.module';
+import { CompetitionModule } from '../app/modules/competition.module';
+import { CompetitionAdminModule } from '../app/modules/competitionadmin.module';
+import { SchemeModule } from '../app/modules/schemes.module';
+
+// firebase
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database'
+import { AngularFireModule } from 'angularfire2';
+import { environment } from 'C:/Users/rikva/Documents/GitHub/WEBS6_Rik_Daan/src/environments/environment';
+
+export const routes: Routes = [
+];
+
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  let fixture;
+  let component;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        LoginComponent,
+        NotificationComponent
+    ],
+    imports: [
+        MatchModule,
+        MatchAdminModule,
+        CompetitionModule,
+        CompetitionAdminModule,
+        SchemeModule,
+        BrowserModule,
+        FormsModule,
+        RouterModule.forRoot(routes),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFireDatabaseModule,
+        ButtonsModule
+    ],
+    providers: [
+      {provide: APP_BASE_HREF, useValue: '/my/app'},
+        AuthorizationService,
+        NotificationService
+    ]
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.debugElement.componentInstance;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  });
+
+  it('should create a component', fakeAsync(() => {
+    expect(component).toBeTruthy();
   }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
-  }));
-});*/
+
+});
