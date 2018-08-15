@@ -53,7 +53,7 @@ export class KnockoutSchemeComponent {
 
     ngOnInit() {
         this.calls = this.matches.length;
-        this.matchService.matches.snapshotChanges().subscribe(matches => {
+        this.matchService.getMatches().subscribe(matches => {
             for (var i = 0; i < this.matches.length; i++) {
                 for (var j = 0; j < matches.length; j++) {
                     if (matches[j].key == this.matches[i].id) {

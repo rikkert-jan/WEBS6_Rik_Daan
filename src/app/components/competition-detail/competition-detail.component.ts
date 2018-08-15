@@ -46,7 +46,7 @@ export class CompetitionDetailComponent {
                     if (this.competition.rounds) {
                         this.competition.rounds.forEach(round => {
                             round.matches.forEach(match => {
-                                this.matchService.getMatch(match.id).snapshotChanges().subscribe(m => {
+                                this.matchService.getMatch(match.id).subscribe(m => {
                                     let n: Match = { id: m.key, ...m.payload.val() };
                                     this.matches.push(n);
                                 })

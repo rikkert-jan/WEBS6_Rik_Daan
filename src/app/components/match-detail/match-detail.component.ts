@@ -31,7 +31,7 @@ export class MatchDetailComponent {
     ngOnInit() {
         this.matchId = this.route.snapshot.paramMap.get('id');
         if (this.matchId) {
-            this.matchService.getMatch(this.matchId).snapshotChanges().subscribe(match => {
+            this.matchService.getMatch(this.matchId).subscribe(match => {
                 if (match.key) {
                     this.match = { id: match.key, ...match.payload.val() }
 
