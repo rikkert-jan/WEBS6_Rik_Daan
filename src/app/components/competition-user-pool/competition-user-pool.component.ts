@@ -16,7 +16,7 @@ export class PoolUserComponent implements OnInit {
 
     ngOnInit() {
         console.log(this.poule);
-        this.userService.users.snapshotChanges().subscribe(users => {
+        this.userService.getAll().subscribe(users => {
             for (var i = 0; i < users.length; i++) {
                 var user = users[i];
                 for (var j = 0; j < this.poule.participants.length; j++) {

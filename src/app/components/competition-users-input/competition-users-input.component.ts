@@ -18,7 +18,7 @@ export class CompetitionUsersInputComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.userService.users.snapshotChanges().subscribe(users => {
+        this.userService.getAll().subscribe(users => {
             this.users = users.map(user => ({id: user.key, ...user.payload.val()}));
         });
     }

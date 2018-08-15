@@ -28,7 +28,7 @@ export class MatchSimpleComponent {
                     this.match.participants = this.userService.getAllUsersForMatch(this.match);
                     this.match.startingTime = new Date(this.match.startingTimeInMs);
                     if (this.match.winner) {
-                        this.userService.getUser(this.match.winner).snapshotChanges().subscribe(user => {
+                        this.userService.getUser(this.match.winner).subscribe(user => {
                             this.winner = { id: user.key, ...user.payload.val() };
                         })
                     }

@@ -72,7 +72,7 @@ export class KnockoutSchemeComponent {
 
     ngDoCheck() {
         if (this.calls == 0 && !this.usersReady) {
-            this.userService.users.snapshotChanges().subscribe(users => {
+            this.userService.getAll().subscribe(users => {
                 for (var i = 0; i < users.length; i++) {
                     for (var j = 0; j < this.matches.length; j++) {
                         var match = this.matches[j];

@@ -13,7 +13,7 @@ export class CompetitionMatchParticipantsComponent {
     set match(m: Match) {
         if (m.participants) {
             m.participants.forEach(participant => {
-                this.userService.getUser(participant.id).snapshotChanges().subscribe(user => {
+                this.userService.getUser(participant.id).subscribe(user => {
                     let u: User = { id: user.key, ...user.payload.val() };
                     this.participants.push(u);
                 });
