@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
+import { AngularFireDatabase, AngularFireList, AngularFireObject, AngularFireAction, DatabaseSnapshot } from "angularfire2/database";
 import { MatchService } from "../services/match.service";
 import { Competition } from "../models/competition";
 import { Round } from "../models/round";
@@ -11,9 +11,6 @@ import { Observable } from "rxjs/Observable";
 @Injectable()
 export class CompetitionService {
 
-    public competitions: AngularFireList<Competition>;
-    public competition: AngularFireObject<Competition>;
-
     private competitionTableName = '/competitions';
     private participantIndex = 0;
 
@@ -23,19 +20,20 @@ export class CompetitionService {
         this.getCompetitions();
     }
 
-    public getCompetitions(): AngularFireList<Competition> {
-        this.competitions = this.database.list(this.competitionTableName)
-        return this.competitions;
+    public getCompetitions(): Observable<AngularFireAction<DatabaseSnapshot>[]> {
+        return this.database.list(this.competitionTableName).snapshotChanges();
     }
 
-    public getCompetition(key: string): AngularFireObject<Competition> {
-        this.competition = this.database.object(this.competitionTableName + "/" + key);
-        return this.competition;
+    public getCompetition(key: string): Observable<AngularFireAction<DatabaseSnapshot>> {
+        return this.database.object(this.competitionTableName + "/" + key).snapshotChanges();
     }
 
+    // TODO: REQUIRES FUTHER TESTING
     public deleteCompetition(key: string) {
-        this.getCompetition(key).valueChanges().subscribe(competition => {
-            if (competition) {
+        this.getCompetition(key).subscribe(c => {
+            let competition: Competition = { id: c.key, ...c.payload.val() };
+
+            if (competition && competition.rounds) {
                 competition.rounds.forEach(round => {
                     round.matches.forEach(match => {
                         this.matchService.deleteMatch(match.id);
@@ -43,7 +41,7 @@ export class CompetitionService {
                 });
             }
         });
-        this.competitions.remove(key);
+        this.database.list(this.competitionTableName).remove(key);
     }
 
     public createCompetition(competition: Competition) {
@@ -64,7 +62,7 @@ export class CompetitionService {
         }
         var newCompetition = competition;
         newCompetition.id = null;
-        this.competitions.push(newCompetition);
+        this.database.list(this.competitionTableName).push(newCompetition);
     }
 
     public updateCompetition(id: string, competition: Competition) {
@@ -85,7 +83,7 @@ export class CompetitionService {
         }
         var updatedCompetition = competition;
         updatedCompetition.id = null;
-        this.competitions.update(id, updatedCompetition);
+        this.database.list(this.competitionTableName).update(id, updatedCompetition);
     }
 
     public generateKnockout(competition: Competition) {
