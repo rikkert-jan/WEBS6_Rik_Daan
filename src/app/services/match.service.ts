@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from "angularfire2/database";
+import { AngularFireDatabase, AngularFireList, AngularFireObject, AngularFireAction, DatabaseSnapshot } from "angularfire2/database";
 import { UserService } from "../services/user.service";
 import { Match } from "../models/match";
 import { Observable } from "rxjs/Observable";
@@ -8,42 +8,35 @@ import { Observable } from "rxjs/Observable";
 @Injectable()
 export class MatchService {
 
-    public matches: AngularFireList<Match>;
-    public match: AngularFireObject<Match>;
-
     private matchTableName = '/matches';
 
     constructor(private database: AngularFireDatabase, private userService: UserService) {
         this.getMatches();
     }
 
-    public getMatches(): AngularFireList<Match> {
-        this.matches = this.database.list(this.matchTableName)
-        return this.matches;
+    public getMatches(): Observable<AngularFireAction<DatabaseSnapshot>[]> {
+        return this.database.list(this.matchTableName).snapshotChanges();
     }
 
-    public getMatch(key: string): AngularFireObject<Match> {
-        this.match = this.database.object(this.matchTableName + "/" + key);
-        return this.match
+    public getMatch(key: string): Observable<AngularFireAction<DatabaseSnapshot>> {
+        return this.database.object(this.matchTableName + "/" + key).snapshotChanges();
     }
 
-    public getMatchCompleteData(key: string): AngularFireObject<Match> {
-        this.match = this.database.object(this.matchTableName + "/" + key);
-        return this.match
+    public getMatchCompleteData(key: string): Observable<AngularFireAction<DatabaseSnapshot>> {
+        return this.database.object(this.matchTableName + "/" + key).snapshotChanges();
     }
 
     public deleteMatch(key: string) {
-        return this.matches.remove(key);
+        return this.database.list(this.matchTableName).remove(key);
     }
 
     public createMatch(match: Match) {
-        var newMatch = match;
-        return this.matches.push(newMatch);
+        return this.database.list(this.matchTableName).push(match);
     }
 
     public updateMatch(id: string, match: Match) {
         var updatedMatch = match;
         updatedMatch.id = null;
-        return this.matches.update(id, updatedMatch);
+        return this.database.list(this.matchTableName).update(id, updatedMatch);
     }
 }

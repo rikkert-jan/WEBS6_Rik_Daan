@@ -41,7 +41,7 @@ export class MatchSchemeComponent implements OnInit {
     ngOnInit() {
         this.competitionId = this.route.snapshot.paramMap.get('id');
         if (this.competitionId) {
-            this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
+            this.competitionService.getCompetition(this.competitionId).subscribe(competition => {
                 if (competition.key) {
                     this.competition = { id: competition.key, ...competition.payload.val() }
                 } else {

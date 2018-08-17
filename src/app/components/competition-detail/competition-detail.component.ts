@@ -39,14 +39,14 @@ export class CompetitionDetailComponent {
     ngOnInit() {
         this.competitionId = this.route.snapshot.paramMap.get('id');
         if (this.competitionId) {
-            this.competitionService.getCompetition(this.competitionId).snapshotChanges().subscribe(competition => {
+            this.competitionService.getCompetition(this.competitionId).subscribe(competition => {
                 if (competition.key) {
                     this.competition = { id: competition.key, ...competition.payload.val() };
 
                     if (this.competition.rounds) {
                         this.competition.rounds.forEach(round => {
                             round.matches.forEach(match => {
-                                this.matchService.getMatch(match.id).snapshotChanges().subscribe(m => {
+                                this.matchService.getMatch(match.id).subscribe(m => {
                                     let n: Match = { id: m.key, ...m.payload.val() };
                                     this.matches.push(n);
                                 })
@@ -54,7 +54,7 @@ export class CompetitionDetailComponent {
                         });
                     }
 
-                    this.userService.getUser(this.competition.creator).snapshotChanges().subscribe(user => {
+                    this.userService.getUser(this.competition.creator).subscribe(user => {
                         let u: User = { id: user.key, ...user.payload.val() };
                         this.creator = u;
                     });
@@ -62,7 +62,7 @@ export class CompetitionDetailComponent {
                     if (this.competition.participants) {
                         this.participants = [];
                         this.competition.participants.forEach(participant => {
-                            this.userService.getUser(participant.id).snapshotChanges().subscribe(user => {
+                            this.userService.getUser(participant.id).subscribe(user => {
                                 let u = { id: user.key, ...user.payload.val() };
                                 this.participants.push(u);
                                 if (u.id === this.auth.user.uid && this.canParticipate) {
@@ -97,7 +97,7 @@ export class CompetitionDetailComponent {
         if (canJoin
             && this.competition.participants.length < this.competition.maxAmountOfParticipants) {
 
-            this.userService.getUser(this.auth.user.uid).snapshotChanges().subscribe(user => {
+            this.userService.getUser(this.auth.user.uid).subscribe(user => {
                 let u: User = { id: user.key, ...user.payload.val() };
                 this.competition.participants.push(u);
                 this.competitionService.updateCompetition(this.competition.id, this.competition)
@@ -112,7 +112,7 @@ export class CompetitionDetailComponent {
     }
 
     public leaveCompetition() {
-        this.userService.getUser(this.auth.user.uid).snapshotChanges().subscribe(user => {
+        this.userService.getUser(this.auth.user.uid).subscribe(user => {
             let u: User = { id: user.key, ...user.payload.val() };
             let index = this.competition.participants.indexOf(u);
             this.competition.participants.splice(index, 1);

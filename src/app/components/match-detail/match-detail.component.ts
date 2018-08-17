@@ -31,17 +31,17 @@ export class MatchDetailComponent {
     ngOnInit() {
         this.matchId = this.route.snapshot.paramMap.get('id');
         if (this.matchId) {
-            this.matchService.getMatch(this.matchId).snapshotChanges().subscribe(match => {
+            this.matchService.getMatch(this.matchId).subscribe(match => {
                 if (match.key) {
                     this.match = { id: match.key, ...match.payload.val() }
 
-                    this.userService.getUser(this.match.creator).snapshotChanges().subscribe(user => {
+                    this.userService.getUser(this.match.creator).subscribe(user => {
                         let u: User = { id: user.key, ...user.payload.val() };
                         this.creator = u;
                     });
 
                     if (this.match.winner) {
-                        this.userService.getUser(this.match.winner).snapshotChanges().subscribe(user => {
+                        this.userService.getUser(this.match.winner).subscribe(user => {
                             let u: User = { id: user.key, ...user.payload.val() };
                             this.winner = u;
                         });
@@ -49,7 +49,7 @@ export class MatchDetailComponent {
 
                     this.participants = [];
                     this.match.participants.forEach(participant => {
-                        this.userService.getUser(participant.id).snapshotChanges().subscribe(user => {
+                        this.userService.getUser(participant.id).subscribe(user => {
                             let u: User = { id: user.key, ...user.payload.val() };
                             this.participants.push(u);
                         });

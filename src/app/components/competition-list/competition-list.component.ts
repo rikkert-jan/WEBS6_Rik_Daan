@@ -23,7 +23,7 @@ export class CompetitionListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.competitionService.competitions.snapshotChanges().subscribe((competitions) => {
+        this.competitionService.getCompetitions().subscribe((competitions) => {
             this.competitions = competitions.map(
                 competition => ({ id: competition.key, ...competition.payload.val() })
             );
