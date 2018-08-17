@@ -36,43 +36,43 @@ export const routes: Routes = [
 ];
 
 describe('AppComponent', () => {
-  let fixture;
-  let component;
+    let fixture;
+    let component;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        LoginComponent,
-        NotificationComponent
-    ],
-    imports: [
-        MatchModule,
-        MatchAdminModule,
-        CompetitionModule,
-        CompetitionAdminModule,
-        SchemeModule,
-        BrowserModule,
-        FormsModule,
-        RouterModule.forRoot(routes),
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
-        AngularFireDatabaseModule,
-        ButtonsModule
-    ],
-    providers: [
-      {provide: APP_BASE_HREF, useValue: '/my/app'},
-        AuthorizationService,
-        NotificationService
-    ]
-    }).compileComponents();
-    fixture = TestBed.createComponent(AppComponent);
-    component = fixture.debugElement.componentInstance;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppComponent,
+                LoginComponent,
+                NotificationComponent
+            ],
+            imports: [
+                MatchModule,
+                MatchAdminModule,
+                CompetitionModule,
+                CompetitionAdminModule,
+                SchemeModule,
+                BrowserModule,
+                FormsModule,
+                RouterModule.forRoot(routes),
+                AngularFireModule.initializeApp(environment.firebase),
+                AngularFireAuthModule,
+                AngularFireDatabaseModule,
+                ButtonsModule
+            ],
+            providers: [
+                { provide: APP_BASE_HREF, useValue: '/my/app' },
+                AuthorizationService,
+                NotificationService
+            ]
+        }).compileComponents();
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.debugElement.componentInstance;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    });
 
-  it('should create a component', fakeAsync(() => {
-    expect(component).toBeTruthy();
-  }));
+    it('should create a component', fakeAsync(() => {
+        expect(component).toBeTruthy();
+    }));
 
 });
