@@ -30,7 +30,7 @@ import { SchemeModule } from '../app/modules/schemes.module';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireModule } from 'angularfire2';
-import { environment } from 'C:/Users/rikva/Documents/GitHub/WEBS6_Rik_Daan/src/environments/environment';
+import { environment } from '../environments/environment';
 
 export const routes: Routes = [
 ];

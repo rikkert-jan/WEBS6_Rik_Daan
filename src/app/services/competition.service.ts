@@ -14,7 +14,8 @@ export class CompetitionService {
     private competitionTableName = '/competitions';
     private participantIndex = 0;
 
-    constructor(private database: AngularFireDatabase,
+    constructor(
+        private database: AngularFireDatabase,
         private matchService: MatchService,
     ) {
         this.getCompetitions();
