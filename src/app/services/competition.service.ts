@@ -29,7 +29,6 @@ export class CompetitionService {
         return this.database.object(this.competitionTableName + "/" + key).snapshotChanges();
     }
 
-    // TODO: REQUIRES FUTHER TESTING
     public deleteCompetition(key: string) {
         this.getCompetition(key).subscribe(c => {
             let competition: Competition = { id: c.key, ...c.payload.val() };
