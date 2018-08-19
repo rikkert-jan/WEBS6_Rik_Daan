@@ -39,6 +39,13 @@ class MockRouter {
 export const routes: Routes = [
 ];
 
+class MockCompetitionService {
+
+    getCompetition() {
+
+    }
+}
+
 describe('competition-detail', () => {
 
     beforeEach(async(() => {
