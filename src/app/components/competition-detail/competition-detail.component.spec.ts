@@ -27,24 +27,12 @@ import { UserService } from '../../services/user.service';
 // firebase
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database'
-import { AngularFireModule, FirebaseApp } from 'angularfire2';
+import { AngularFireModule, FirebaseApp, FirebaseAppProvider } from 'angularfire2';
 import { environment } from '../../../environments/environment';
 import { Competition } from '../../models/competition';
 
-let mockRouter: any;
-class MockRouter {
-    navigate = jasmine.createSpy('navigate');
-}
-
 export const routes: Routes = [
 ];
-
-class MockCompetitionService {
-
-    getCompetition() {
-
-    }
-}
 
 describe('competition-detail', () => {
 
@@ -72,7 +60,8 @@ describe('competition-detail', () => {
                 NotificationService,
                 CompetitionService,
                 MatchService,
-                UserService
+                UserService,
+                FirebaseAppProvider
             ]
         }).compileComponents();
     }));
@@ -83,9 +72,8 @@ describe('competition-detail', () => {
         expect(app).toBeTruthy();
     }));
 
-    it('should get a competition', () => {
+    it('should get a competition', async(() => {
         const fixture = TestBed.createComponent(CompetitionDetailComponent);
-        const app = fixture.debugElement.componentInstance;
 
         let fakeCompetition: Competition = {
             id: '12io3jkasf8712jk3',
@@ -111,8 +99,7 @@ describe('competition-detail', () => {
         fixture.componentInstance.ngOnInit();
 
         expect(fixture.componentInstance.competition.id).toMatch(fakeCompetition.id);
-        expect(fixture.componentInstance.ngOnInit).toHaveBeenCalled();
-    });
+    }));
 
     it('user should join competition', () => {
         const fixture = TestBed.createComponent(CompetitionDetailComponent);

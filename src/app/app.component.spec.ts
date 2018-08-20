@@ -31,6 +31,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
+import { FirebaseApp } from 'angularfire2/firebase.app.module';
 
 export const routes: Routes = [
 ];
