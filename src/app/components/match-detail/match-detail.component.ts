@@ -48,12 +48,14 @@ export class MatchDetailComponent {
                     }
 
                     this.participants = [];
-                    this.match.participants.forEach(participant => {
-                        this.userService.getUser(participant.id).subscribe(user => {
-                            let u: User = { id: user.key, ...user.payload.val() };
-                            this.participants.push(u);
+                    if (this.match.participants) {
+                        this.match.participants.forEach(participant => {
+                            this.userService.getUser(participant.id).subscribe(user => {
+                                let u: User = { id: user.key, ...user.payload.val() };
+                                this.participants.push(u);
+                            });
                         });
-                    });
+                    }
                 } else {
                     this.match = new Match();
                 }

@@ -8,15 +8,19 @@ import { Component } from "@angular/core";
 })
 export class LoginComponent {
 
+    public isAuthenticated = false;
+
     constructor(
         public auth: AuthorizationService
     ) {}
 
     public login() {
         this.auth.login();
+        this.isAuthenticated = true;
     }
 
     public logout() {
         this.auth.logout();
+        this.isAuthenticated = false;
     }
 }

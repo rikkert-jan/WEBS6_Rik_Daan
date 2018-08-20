@@ -17,9 +17,7 @@ export class CompetitionService {
     constructor(
         private database: AngularFireDatabase,
         private matchService: MatchService,
-    ) {
-        this.getCompetitions();
-    }
+    ) { }
 
     public getCompetitions(): Observable<AngularFireAction<DatabaseSnapshot>[]> {
         return this.database.list(this.competitionTableName).snapshotChanges();
@@ -29,7 +27,6 @@ export class CompetitionService {
         return this.database.object(this.competitionTableName + "/" + key).snapshotChanges();
     }
 
-    // TODO: REQUIRES FUTHER TESTING
     public deleteCompetition(key: string) {
         this.getCompetition(key).subscribe(c => {
             let competition: Competition = { id: c.key, ...c.payload.val() };
@@ -133,7 +130,7 @@ export class CompetitionService {
                 match.id = ref.key;
                 var round = new Round();
                 round.number = roundNumber;
-                round.pouleNumber = null;                
+                round.pouleNumber = null;
                 round.matches = [{ id: ref.key }] as Match[];
                 rounds.push(round);
             }
@@ -156,7 +153,7 @@ export class CompetitionService {
         var pouleParticipantCombos = this.calculateUniqueMatches(pouleParticipants);
         var pouleParticipantCombosPool = this.calculateUniqueMatches(pouleParticipants);
         var numberOfRounds = this.calculateNumberOfUserOccurencesInCombos(pouleParticipantCombos);
-                
+
         for (var i = 0; i < numberOfRounds; i++) {
             var round = new Round();
             round.number = i + 1;
