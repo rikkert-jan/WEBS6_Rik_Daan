@@ -36,22 +36,22 @@ export const routes: Routes = [
 ];
 
 let mockMatch: Match = {
-    id: '987gij24',
-    status: 'started',
-    creator: '1',
+    id: '-LFC8RjXsdZI4r_vB4Bc',
+    status: 'OPEN',
+    creator: 'L7aHUN0PlofNnTeBwDseGd1B2Di2',
     participants: [
         {
-            id: '1',
+            id: '2',
             email: '1@1.nl',
             name: '1',
         }, {
-            id: '2',
+            id: '4',
             email: '2@2.nl',
             name: '2',
         }
     ],
     startingTime: new Date(),
-    startingTimeInMs: Date.now(),
+    startingTimeInMs: 1532833200000,
     winner: undefined,
     prevMatch1: undefined,
     prevMatch2: undefined
@@ -113,4 +113,14 @@ describe('log-in', () => {
 
         expect(fixture.componentInstance.participants.length).toEqual(2);
     }));
+
+    // it('should have 2 participating users (callThrough)', () => {
+    //     const fixture = TestBed.createComponent(CompetitionMatchParticipantsComponent);
+
+    //     spyOn(fixture.componentInstance, 'setMatchManually').and.callThrough();
+
+    //     fixture.componentInstance.setMatchManually(mockMatch);
+
+    //     expect(fixture.componentInstance.participants.length).toEqual(2);
+    // });
 });
